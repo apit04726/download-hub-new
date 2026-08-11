@@ -1,8 +1,14 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "*.php",
+      "use": "vercel-php"
+    }
+  ],
   "routes": [
     {
-      "src": "/(uploads|wp-content|favicon.svg)(.*)",
+      "src": "/(uploads|wp-content|favicon.svg|data_store.json)(.*)",
       "dest": "/$1$2"
     },
     {
