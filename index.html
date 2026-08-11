@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DownloadHub | Premium Android Apps & Games Portal</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="wp-content/themes/download-hub-theme/style.css">
+
+    <!-- React 18 & Babel via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        svg { display: inline-block !important; vertical-align: middle; }
+        .brand-logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, #01875F 0%, #34A853 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(1, 135, 95, 0.3);
+            flex-shrink: 0;
+        }
+        .btn-install-sm {
+            background: var(--play-green);
+            color: #fff;
+            border-radius: var(--radius-full);
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-install-sm:hover {
+            background: var(--play-green-hover);
+        }
+        .admin-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .admin-badge-pill:hover {
+            background: var(--bg-hover);
+            border-color: var(--play-green);
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const INITIAL_APPS = [
+            {
+                id: "socialgo",
+                title: "SocialGo",
+                tagline: "Next-Gen AI Social Network, Reels & Encrypted Chat",
+                category: "Tools",
+                category_slug: "tools",
+                acf: {
+                    apk_file: "uploads/apks/SocialGo.apk",
+                    app_version: "v3.4.1",
+                    app_size: "82.4 MB",
+                    app_rating: "4.9",
+                    rating_count: "24,800",
+                    app_developer: "SocialGo Tech Inc.",
+                    package_name: "com.socialgo.app",
+                    min_android: "Android 8.0+",
+                    release_date: "August 10, 2026",
+                    download_count: 18456,
+                    app_icon: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&auto=format&fit=crop&q=90",
+                    app_banner: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&auto=format&fit=crop&q=90",
+                    screenshots: [
+                        "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80"
+                    ],
+                    features: [
+                        "End-to-End Encrypted Instant Messaging & Group Chats",
+                        "Built-in AI Assistant for Post Writing & Image Enhancements",
+                        "Ultra HD 60fps Voice & 4K Video Calling with Spatial Audio",
+                        "Trending Reels, Stories & Creative Filters with Custom Soundtracks",
+                        "Dark Mode, Custom Chat Themes & Custom Notification Tones",
+                        "Zero-Data Mining Guarantee with Private Cloud Backups"
+                    ]
+                },
+                description: "SocialGo is the ultimate next-generation social networking and messaging platform designed for speed, security, and vibrant community engagement. Connect with friends, share high-resolution videos, explore trending stories, and collaborate seamlessly using integrated AI tools.\n\nWhether you're looking for crystal-clear HD voice calls, customizable group channels, or private end-to-end encrypted messaging, SocialGo delivers an intuitive, ad-free mobile experience."
+            },
+            {
+                id: "newshub",
+                title: "NewsHub",
+                tagline: "Real-Time Global News, Breaking Alerts & Audio Briefings",
+                category: "Productivity",
+                category_slug: "productivity",
+                acf: {
+                    apk_file: "uploads/apks/NewsHub.apk",
+                    app_version: "v2.8.0",
+                    app_size: "77.7 MB",
+                    app_rating: "4.8",
+                    rating_count: "18,200",
+                    app_developer: "NewsHub Global Media",
+                    package_name: "com.newshub.global",
+                    min_android: "Android 7.0+",
+                    release_date: "August 9, 2026",
+                    download_count: 14201,
+                    app_icon: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&auto=format&fit=crop&q=90",
+                    app_banner: "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&auto=format&fit=crop&q=90",
+                    screenshots: [
+                        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=800&auto=format&fit=crop&q=80"
+                    ],
+                    features: [
+                        "Instant Breaking News Push Notifications for Global Events",
+                        "Personalized Feed tailored across Technology, Finance & Sports",
+                        "Offline Reading Mode: Save articles for reading without Internet",
+                        "AI Audio News Reader: Listen to full articles hands-free",
+                        "Verified Fact-Checking Badges & Multi-Source Coverage",
+                        "Distraction-Free OLED Dark Mode & Adjustable Typography"
+                    ]
+                },
+                description: "Stay informed with NewsHub, your premier destination for unbiased global news, live economic updates, and trending headlines. Powered by over 500 international journalists and real-time news syndicates, NewsHub delivers stories that matter directly to your fingertips.\n\nEnjoy customizable reading feeds, offline article saving, and smart audio narration so you can stay updated while commuting or working out."
+            },
+            {
+                id: "farm-management",
+                title: "Farm Management",
+                tagline: "Smart Agriculture, Crop Yield AI & Livestock Tracking",
+                category: "Tools",
+                category_slug: "tools",
+                acf: {
+                    apk_file: "uploads/apks/farm-management.apk",
+                    app_version: "v1.5.2",
+                    app_size: "96.2 MB",
+                    app_rating: "4.9",
+                    rating_count: "12,400",
+                    app_developer: "AgriTech Digital Solutions",
+                    package_name: "com.agritech.farm",
+                    min_android: "Android 8.0+",
+                    release_date: "August 8, 2026",
+                    download_count: 9801,
+                    app_icon: "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=90",
+                    app_banner: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=90",
+                    screenshots: [
+                        "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
+                        "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+                    ],
+                    features: [
+                        "Field Soil Monitoring & AI Crop Disease Detection via Camera",
+                        "Livestock Health Logging, Medical History & Birth Tracking",
+                        "Smart Irrigation Scheduling with Hyper-Local Weather Integration",
+                        "Expense, Fertilizer & Equipment Maintenance Cost Reports",
+                        "GPS Field Boundary Mapping & Harvest Yield Projections",
+                        "Multi-User Team Access with Offline Field Data Synchronization"
+                    ]
+                },
+                description: "Farm Management is an enterprise-grade digital companion designed for modern agriculture, livestock managers, and independent growers. Automate your daily farming operations, track soil moisture levels, monitor herd health, and increase crop yields with AI-powered insights.\n\nMap field boundaries using precision GPS, record fertilizer logs, and access real-time market crop prices to ensure optimal profitability year-round."
+            }
+        ];
+
+        function App() {
+            // Persistent Apps state from localStorage or INITIAL_APPS fallback
+            const [apps, setApps] = React.useState(() => {
+                const saved = localStorage.getItem('download_hub_apps');
+                return saved ? JSON.parse(saved) : INITIAL_APPS;
+            });
+
+            // View Routing: 'home', 'details', 'admin'
+            const [currentView, setCurrentView] = React.useState('home');
+            const [selectedAppId, setSelectedAppId] = React.useState(null);
+            const [selectedCategory, setSelectedCategory] = React.useState('all');
+            const [searchQuery, setSearchQuery] = React.useState('');
+
+            // Admin Auth state
+            const [isAdminLoggedIn, setIsAdminLoggedIn] = React.useState(() => {
+                return localStorage.getItem('download_hub_admin') === 'true';
+            });
+            const [showAdminModal, setShowAdminModal] = React.useState(false);
+            const [adminPasscodeInput, setAdminPasscodeInput] = React.useState('');
+            const [adminError, setAdminError] = React.useState('');
+
+            // Admin Edit/Add App Modal
+            const [showAppFormModal, setShowAppFormModal] = React.useState(false);
+            const [editingApp, setEditingApp] = React.useState(null);
+            const [appForm, setAppForm] = React.useState({
+                title: '',
+                tagline: '',
+                category: 'Tools',
+                app_developer: '',
+                app_version: 'v1.0.0',
+                app_size: '25 MB',
+                app_rating: '4.8',
+                package_name: 'com.app.android',
+                min_android: 'Android 8.0+',
+                apk_file: '',
+                app_icon: '',
+                description: '',
+                features: ''
+            });
+
+            // APK Download Modal State
+            const [downloadModalApp, setDownloadModalApp] = React.useState(null);
+            const [downloadTimer, setDownloadTimer] = React.useState(5);
+            const [downloading, setDownloading] = React.useState(false);
+            const [downloadComplete, setDownloadComplete] = React.useState(false);
+
+            // Screenshot Preview Lightbox
+            const [previewScreenshot, setPreviewScreenshot] = React.useState(null);
+
+            // Save apps to localStorage whenever apps array changes
+            React.useEffect(() => {
+                localStorage.setItem('download_hub_apps', JSON.stringify(apps));
+            }, [apps]);
+
+            // Handle Download Timer countdown
+            React.useEffect(() => {
+                let timerInterval = null;
+                if (downloading && downloadTimer > 0) {
+                    timerInterval = setInterval(() => {
+                        setDownloadTimer(prev => prev - 1);
+                    }, 1000);
+                } else if (downloading && downloadTimer === 0) {
+                    setDownloading(false);
+                    setDownloadComplete(true);
+                    // Increment download count
+                    if (downloadModalApp) {
+                        incrementDownloadCount(downloadModalApp.id);
+                    }
+                }
+                return () => clearInterval(timerInterval);
+            }, [downloading, downloadTimer]);
+
+            // Increment Download Count
+            const incrementDownloadCount = (id) => {
+                setApps(prevApps => prevApps.map(item => {
+                    if (item.id === id) {
+                        const current = parseInt(item.acf.download_count || 100);
+                        return {
+                            ...item,
+                            acf: {
+                                ...item.acf,
+                                download_count: current + 1
+                            }
+                        };
+                    }
+                    return item;
+                }));
+            };
+
+            // Admin Login Handler
+            const handleAdminLogin = (e) => {
+                e.preventDefault();
+                const storedPass = localStorage.getItem('download_hub_admin_pass') || 'admin123';
+                if (adminPasscodeInput === storedPass) {
+                    setIsAdminLoggedIn(true);
+                    localStorage.setItem('download_hub_admin', 'true');
+                    setShowAdminModal(false);
+                    setAdminPasscodeInput('');
+                    setAdminError('');
+                } else {
+                    setAdminError('Invalid Admin Passcode. Default is: admin123');
+                }
+            };
+
+            const handleAdminLogout = () => {
+                setIsAdminLoggedIn(false);
+                localStorage.removeItem('download_hub_admin');
+            };
+
+            // Open App Form Modal (Add or Edit)
+            const openAppForm = (appToEdit = null) => {
+                if (appToEdit) {
+                    setEditingApp(appToEdit);
+                    setAppForm({
+                        title: appToEdit.title || '',
+                        tagline: appToEdit.tagline || '',
+                        category: appToEdit.category || 'Tools',
+                        app_developer: appToEdit.acf?.app_developer || '',
+                        app_version: appToEdit.acf?.app_version || 'v1.0.0',
+                        app_size: appToEdit.acf?.app_size || '25 MB',
+                        app_rating: appToEdit.acf?.app_rating || '4.8',
+                        package_name: appToEdit.acf?.package_name || 'com.app',
+                        min_android: appToEdit.acf?.min_android || 'Android 8.0+',
+                        apk_file: appToEdit.acf?.apk_file || '',
+                        app_icon: appToEdit.acf?.app_icon || '',
+                        description: appToEdit.description || '',
+                        features: Array.isArray(appToEdit.acf?.features) ? appToEdit.acf.features.join('\n') : ''
+                    });
+                } else {
+                    setEditingApp(null);
+                    setAppForm({
+                        title: '',
+                        tagline: '',
+                        category: 'Tools',
+                        app_developer: '',
+                        app_version: 'v1.0.0',
+                        app_size: '25 MB',
+                        app_rating: '4.8',
+                        package_name: 'com.app.android',
+                        min_android: 'Android 8.0+',
+                        apk_file: '',
+                        app_icon: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=90',
+                        description: '',
+                        features: 'Fast and optimized Android performance\nVerified malware-free\nClean ad-free interface'
+                    });
+                }
+                setShowAppFormModal(true);
+            };
+
+            // Save App Handler (Create or Edit)
+            const handleSaveApp = (e) => {
+                e.preventDefault();
+                const slugId = editingApp ? editingApp.id : appForm.title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+                
+                const featuresArray = appForm.features
+                    .split('\n')
+                    .map(f => f.trim())
+                    .filter(f => f.length > 0);
+
+                const newAppData = {
+                    id: slugId,
+                    title: appForm.title,
+                    tagline: appForm.tagline,
+                    category: appForm.category,
+                    category_slug: appForm.category.toLowerCase(),
+                    description: appForm.description,
+                    acf: {
+                        apk_file: appForm.apk_file || `uploads/apks/${slugId}.apk`,
+                        app_version: appForm.app_version,
+                        app_size: appForm.app_size,
+                        app_rating: appForm.app_rating,
+                        rating_count: editingApp?.acf?.rating_count || "5,400",
+                        app_developer: appForm.app_developer,
+                        package_name: appForm.package_name,
+                        min_android: appForm.min_android,
+                        release_date: editingApp?.acf?.release_date || new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+                        download_count: editingApp?.acf?.download_count || 500,
+                        app_icon: appForm.app_icon || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=300&auto=format&fit=crop&q=90',
+                        app_banner: 'https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&auto=format&fit=crop&q=90',
+                        screenshots: editingApp?.acf?.screenshots || [
+                            appForm.app_icon || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop&q=80',
+                            'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=80',
+                            'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80'
+                        ],
+                        features: featuresArray
+                    }
+                };
+
+                if (editingApp) {
+                    setApps(prev => prev.map(a => a.id === editingApp.id ? newAppData : a));
+                } else {
+                    setApps(prev => [newAppData, ...prev]);
+                }
+
+                setShowAppFormModal(false);
+            };
+
+            // Delete App Handler
+            const handleDeleteApp = (id) => {
+                if (window.confirm("Are you sure you want to delete this application?")) {
+                    setApps(prev => prev.filter(a => a.id !== id));
+                    if (selectedAppId === id) {
+                        setCurrentView('home');
+                        setSelectedAppId(null);
+                    }
+                }
+            };
+
+            // Start APK Download Countdown
+            const startDownloadFlow = (appItem) => {
+                setDownloadModalApp(appItem);
+                setDownloadTimer(5);
+                setDownloading(true);
+                setDownloadComplete(false);
+            };
+
+            // Trigger actual direct file download
+            const triggerDirectDownload = () => {
+                if (!downloadModalApp) return;
+                const apkPath = downloadModalApp.acf?.apk_file || '#';
+                
+                // Trigger download or dynamic blob fallback
+                const link = document.createElement('a');
+                link.href = apkPath;
+                link.download = `${downloadModalApp.id}.apk`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                setDownloadModalApp(null);
+            };
+
+            // Filtered Apps List based on Category and Search Query
+            const filteredApps = apps.filter(app => {
+                const matchesCat = selectedCategory === 'all' || 
+                    (app.category_slug && app.category_slug.toLowerCase() === selectedCategory.toLowerCase()) ||
+                    (app.category && app.category.toLowerCase() === selectedCategory.toLowerCase());
+
+                const q = searchQuery.toLowerCase().trim();
+                const matchesSearch = !q || 
+                    app.title.toLowerCase().includes(q) || 
+                    (app.tagline && app.tagline.toLowerCase().includes(q)) || 
+                    (app.category && app.category.toLowerCase().includes(q));
+
+                return matchesCat && matchesSearch;
+            });
+
+            const selectedApp = apps.find(a => a.id === selectedAppId);
+
+            return (
+                <div>
+                    {/* Header Navbar */}
+                    <header className="site-header">
+                        <div className="nav-container">
+                            <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); setSelectedAppId(null); }} className="brand-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', textDecoration: 'none' }}>
+                                <div className="brand-logo-icon">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                </div>
+                                <div style={{ fontFamily: 'var(--font-heading)', fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-main)', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center' }}>
+                                    Download<span style={{ color: 'var(--play-green)' }}>Hub</span>
+                                    <span style={{ width: '6px', height: '6px', background: 'var(--play-green)', borderRadius: '50%', display: 'inline-block', marginLeft: '2px' }}></span>
+                                </div>
+                            </a>
+
+                            {/* Category Nav Links */}
+                            <nav className="play-nav-links">
+                                {['all', 'games', 'tools', 'photography', 'health', 'productivity'].map(cat => (
+                                    <a 
+                                        key={cat} 
+                                        href="#" 
+                                        onClick={(e) => { e.preventDefault(); setSelectedCategory(cat); setCurrentView('home'); }}
+                                        className={`play-nav-item ${selectedCategory === cat ? 'active' : ''}`}
+                                        style={{ textDecoration: 'none', textTransform: 'capitalize' }}
+                                    >
+                                        {cat === 'all' ? 'Apps' : cat}
+                                    </a>
+                                ))}
+                            </nav>
+
+                            {/* Search Input */}
+                            <div className="search-bar-wrap">
+                                <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                                <input 
+                                    type="text" 
+                                    className="search-input" 
+                                    placeholder="Search Android apps, games, APKs..." 
+                                    value={searchQuery}
+                                    onChange={(e) => { setSearchQuery(e.target.value); setCurrentView('home'); }}
+                                />
+                                <span className="search-kbd">⌘K</span>
+                            </div>
+
+                            {/* Actions & Admin Buttons */}
+                            <div className="nav-actions">
+                                {isAdminLoggedIn ? (
+                                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                                        <button onClick={() => openAppForm()} className="btn-primary" style={{ fontSize: '0.85rem', padding: '0.45rem 1.15rem', borderRadius: '8px' }}>
+                                            + Upload App
+                                        </button>
+                                        <button onClick={handleAdminLogout} className="admin-badge-pill" style={{ color: '#EF4444' }}>
+                                            Exit Admin
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <button onClick={() => setShowAdminModal(true)} className="admin-badge-pill">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                        Admin Portal
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* MAIN CONTENT AREA */}
+                    <main className="layout-container">
+                        {currentView === 'home' && (
+                            <div>
+                                {/* Hero Banner */}
+                                <section className="play-hero-banner">
+                                    <div className="play-hero-banner-content">
+                                        <span className="security-badge-box" style={{ marginBottom: '0.75rem' }}>
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                            100% Malware Free & Play Protect Verified
+                                        </span>
+                                        <h1 className="play-hero-banner-title">Discover & Download Premium Android Apps</h1>
+                                        <p className="play-hero-banner-sub">Your trusted destination for verified, virus-free Android APKs, original app packages, and high-speed direct downloads.</p>
+                                    </div>
+                                </section>
+
+                                {/* Section Header */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                                    <div>
+                                        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                                            {selectedCategory === 'all' ? 'Recommended Applications' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Apps`}
+                                        </h2>
+                                        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Selected top rated apps & games</p>
+                                    </div>
+                                    <span style={{ color: 'var(--play-green)', fontWeight: 700, fontSize: '0.9rem' }}>
+                                        {filteredApps.length} Apps Available
+                                    </span>
+                                </div>
+
+                                {/* Apps Grid */}
+                                {filteredApps.length === 0 ? (
+                                    <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginBottom: '3rem' }}>
+                                        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Apps Found</h3>
+                                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Try searching for another keyword or upload a new app via Admin Portal.</p>
+                                        <button onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }} className="btn-primary">View All Apps</button>
+                                    </div>
+                                ) : (
+                                    <div className="play-apps-grid">
+                                        {filteredApps.map(appItem => {
+                                            const acf = appItem.acf || {};
+                                            return (
+                                                <article key={appItem.id} className="play-app-card">
+                                                    <div>
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                                                            <a href="#" onClick={(e) => { e.preventDefault(); setSelectedAppId(appItem.id); setCurrentView('details'); }}>
+                                                                <img src={acf.app_icon} alt={appItem.title} className="play-card-icon" loading="lazy" />
+                                                            </a>
+                                                            <span className="card-cat-tag">{appItem.category}</span>
+                                                        </div>
+
+                                                        <div className="play-card-info" style={{ marginBottom: '0.85rem' }}>
+                                                            <h3 className="play-card-name">
+                                                                <a href="#" onClick={(e) => { e.preventDefault(); setSelectedAppId(appItem.id); setCurrentView('details'); }}>
+                                                                    {appItem.title}
+                                                                </a>
+                                                            </h3>
+                                                            <div className="play-card-company">{acf.app_developer}</div>
+                                                            
+                                                            <div className="play-card-badges">
+                                                                <span className="rating-badge">★ {acf.app_rating}</span>
+                                                                <span className="version-badge">{acf.app_version}</span>
+                                                                <span className="size-badge">{acf.app_size}</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <p className="play-card-desc">{appItem.tagline}</p>
+                                                    </div>
+
+                                                    <div className="play-card-footer">
+                                                        <span className="download-count">
+                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                                <polyline points="7 10 12 15 17 10"></polyline>
+                                                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                                                            </svg>
+                                                            <span>{Number(acf.download_count || 100).toLocaleString()}</span> downloads
+                                                        </span>
+
+                                                        <button 
+                                                            onClick={() => { setSelectedAppId(appItem.id); setCurrentView('details'); }} 
+                                                            className="btn-install-sm" 
+                                                            style={{ padding: '0.5rem 1.25rem' }}
+                                                        >
+                                                            View Details
+                                                        </button>
+                                                    </div>
+                                                </article>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* SINGLE APP DETAILS VIEW */}
+                        {currentView === 'details' && selectedApp && (
+                            <div>
+                                {/* Breadcrumbs & Admin Actions */}
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                                        <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }} style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>Apps</a>
+                                        <span style={{ color: 'var(--text-dim)' }}>&rsaquo;</span>
+                                        <span className="card-cat-tag">{selectedApp.category}</span>
+                                    </div>
+
+                                    {isAdminLoggedIn && (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <button onClick={() => openAppForm(selectedApp)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--play-green)', color: '#FFF', padding: '0.45rem 1rem', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
+                                                ✏️ Edit App
+                                            </button>
+                                            <button onClick={() => handleDeleteApp(selectedApp.id)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', border: '1px solid #EF4444', padding: '0.45rem 0.95rem', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
+                                                🗑️ Delete App
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Hero Section */}
+                                <section className="play-hero">
+                                    <div className="play-hero-left">
+                                        <h1 className="play-hero-title">{selectedApp.title}</h1>
+                                        <div className="play-hero-company">{selectedApp.acf?.app_developer}</div>
+
+                                        <div className="play-stats-row">
+                                            <div className="play-stat-col">
+                                                <div className="play-stat-val">{selectedApp.acf?.app_rating} ★</div>
+                                                <div className="play-stat-sub">{selectedApp.acf?.rating_count || '2,400'} reviews</div>
+                                            </div>
+
+                                            <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
+                                                <div className="play-stat-val">{Number(selectedApp.acf?.download_count || 100).toLocaleString()}+</div>
+                                                <div className="play-stat-sub">Downloads</div>
+                                            </div>
+
+                                            <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
+                                                <div className="play-stat-val" style={{ fontSize: '0.95rem' }}>
+                                                    <span style={{ border: '1px solid var(--text-muted)', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>12+</span>
+                                                </div>
+                                                <div className="play-stat-sub">Rated for 12+</div>
+                                            </div>
+                                        </div>
+
+                                        <div className="play-hero-actions">
+                                            <button className="btn-install" onClick={() => startDownloadFlow(selectedApp)}>
+                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                                Install APK ({selectedApp.acf?.app_size})
+                                            </button>
+
+                                            <button className="btn-secondary-action" onClick={() => { navigator.clipboard.writeText(window.location.href); alert('App Link copied to clipboard!'); }}>
+                                                Share
+                                            </button>
+                                        </div>
+
+                                        <div className="device-compatibility" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: '1.25rem' }}>
+                                            <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0.55rem' }}>
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>This app is available for your device (Requires {selectedApp.acf?.min_android})</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="play-hero-right">
+                                        <img src={selectedApp.acf?.app_icon} alt={selectedApp.title} className="play-hero-app-icon" />
+                                    </div>
+                                </section>
+
+                                {/* Screenshots Carousel */}
+                                {selectedApp.acf?.screenshots && selectedApp.acf.screenshots.length > 0 && (
+                                    <section className="play-screenshots-container">
+                                        <div className="play-screenshots-scroll">
+                                            {selectedApp.acf.screenshots.map((shot, idx) => (
+                                                <div key={idx} className="screenshot-wrapper" onClick={() => setPreviewScreenshot(shot)}>
+                                                    <img src={shot} alt={`Screenshot ${idx + 1}`} className="play-screenshot-item" />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+                                )}
+
+                                {/* Details & Sidebar */}
+                                <div className="play-main-layout">
+                                    <div className="play-content-left">
+                                        <div className="play-section-title">
+                                            <span>About this app</span>
+                                        </div>
+                                        <p className="play-description" style={{ whiteSpace: 'pre-line' }}>{selectedApp.description}</p>
+
+                                        <div className="play-section-title">
+                                            <span>Technical Specifications & Package Info</span>
+                                        </div>
+
+                                        <div className="play-specs-grid">
+                                            <div className="spec-card">
+                                                <div className="spec-icon">📦</div>
+                                                <div>
+                                                    <div className="spec-cell-label">Version</div>
+                                                    <div className="spec-cell-val">{selectedApp.acf?.app_version}</div>
+                                                </div>
+                                            </div>
+                                            <div className="spec-card">
+                                                <div className="spec-icon">📅</div>
+                                                <div>
+                                                    <div className="spec-cell-label">Updated on</div>
+                                                    <div className="spec-cell-val">{selectedApp.acf?.release_date}</div>
+                                                </div>
+                                            </div>
+                                            <div className="spec-card">
+                                                <div className="spec-icon">⚡</div>
+                                                <div>
+                                                    <div className="spec-cell-label">Download Size</div>
+                                                    <div className="spec-cell-val">{selectedApp.acf?.app_size}</div>
+                                                </div>
+                                            </div>
+                                            <div className="spec-card">
+                                                <div className="spec-icon">📱</div>
+                                                <div>
+                                                    <div className="spec-cell-label">Requires Android</div>
+                                                    <div className="spec-cell-val">{selectedApp.acf?.min_android}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {selectedApp.acf?.features && selectedApp.acf.features.length > 0 && (
+                                            <div style={{ marginTop: '2.5rem' }}>
+                                                <div className="play-section-title">
+                                                    <span>Key Highlights & Features</span>
+                                                </div>
+                                                <ul className="features-checklist play-features-grid">
+                                                    {selectedApp.acf.features.map((feat, idx) => (
+                                                        <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', background: 'var(--bg-surface)', padding: '0.85rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
+                                                            <div className="check-icon">✓</div>
+                                                            <span>{feat}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Sidebar */}
+                                    <div className="play-sidebar">
+                                        <div className="sidebar-card">
+                                            <div className="sidebar-title">
+                                                <span>App support</span>
+                                            </div>
+                                            <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'grid', gap: '0.75rem' }}>
+                                                <div>📧 <strong>Support Email:</strong> support@{selectedApp.id}.com</div>
+                                                <div>🌐 <strong>Developer:</strong> {selectedApp.acf?.app_developer}</div>
+                                                <div>🔒 <strong>Privacy Policy:</strong> <span style={{ color: 'var(--play-green)', fontWeight: 600 }}>Verified Clean</span></div>
+                                            </div>
+                                        </div>
+
+                                        <div className="sidebar-card">
+                                            <div className="sidebar-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <span>Similar apps</span>
+                                                <a href="#" onClick={(e) => { e.preventDefault(); setCurrentView('home'); }} style={{ color: 'var(--play-green)', fontSize: '0.85rem' }}>View All</a>
+                                            </div>
+                                            {apps.filter(a => a.id !== selectedApp.id).slice(0, 3).map(other => (
+                                                <a key={other.id} href="#" onClick={(e) => { e.preventDefault(); setSelectedAppId(other.id); }} className="similar-app-item">
+                                                    <img src={other.acf?.app_icon} className="similar-app-icon" />
+                                                    <div className="similar-app-meta">
+                                                        <div className="similar-app-name">{other.title}</div>
+                                                        <div className="similar-app-company">{other.acf?.app_developer}</div>
+                                                        <div className="similar-app-rating">★ {other.acf?.app_rating}</div>
+                                                    </div>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+
+                    {/* FOOTER */}
+                    <footer className="site-footer" style={{ marginTop: '4rem', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-color)', padding: '3rem 1rem 1.5rem 1rem' }}>
+                        <div className="footer-container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.5rem', marginBottom: '1.5rem' }}>
+                                <div style={{ fontWeight: 800, fontSize: '1.2rem' }}>Download<span style={{ color: 'var(--play-green)' }}>Hub</span></div>
+                                <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>&copy; 2026 Download-Hub Inc. All Rights Reserved.</div>
+                            </div>
+                        </div>
+                    </footer>
+
+                    {/* MODAL 1: Admin Passcode Login Modal */}
+                    {showAdminModal && (
+                        <div className="modal-overlay active">
+                            <div className="modal-box" style={{ maxWidth: '400px' }}>
+                                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.5rem' }}>Admin Access Portal</h3>
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.88rem', marginBottom: '1.5rem' }}>Enter the admin passcode to manage apps & APK files.</p>
+                                
+                                <form onSubmit={handleAdminLogin}>
+                                    <input 
+                                        type="password" 
+                                        className="search-input" 
+                                        style={{ width: '100%', marginBottom: '1rem', padding: '0.75rem' }} 
+                                        placeholder="Enter Passcode (Default: admin123)" 
+                                        value={adminPasscodeInput}
+                                        onChange={(e) => setAdminPasscodeInput(e.target.value)}
+                                        autoFocus
+                                    />
+
+                                    {adminError && (
+                                        <p style={{ color: '#EF4444', fontSize: '0.85rem', marginBottom: '1rem' }}>{adminError}</p>
+                                    )}
+
+                                    <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                        <button type="button" onClick={() => setShowAdminModal(false)} className="btn-cancel-download">Cancel</button>
+                                        <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Login</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* MODAL 2: Add / Edit App Modal */}
+                    {showAppFormModal && (
+                        <div className="modal-overlay active">
+                            <div className="modal-box" style={{ maxWidth: '650px', maxHeight: '90vh', overflowY: 'auto' }}>
+                                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem' }}>
+                                    {editingApp ? `Edit App: ${editingApp.title}` : 'Upload New Android App'}
+                                </h3>
+
+                                <form onSubmit={handleSaveApp} style={{ display: 'grid', gap: '1rem' }}>
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                        <div>
+                                            <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>App Title</label>
+                                            <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.title} onChange={e => setAppForm({...appForm, title: e.target.value})} />
+                                        </div>
+                                        <div>
+                                            <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Category</label>
+                                            <select className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} value={appForm.category} onChange={e => setAppForm({...appForm, category: e.target.value})}>
+                                                <option value="Tools">Tools</option>
+                                                <option value="Productivity">Productivity</option>
+                                                <option value="Games">Games</option>
+                                                <option value="Photography">Photography</option>
+                                                <option value="Health">Health</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Tagline</label>
+                                        <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.tagline} onChange={e => setAppForm({...appForm, tagline: e.target.value})} />
+                                    </div>
+
+                                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+                                        <div>
+                                            <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Developer</label>
+                                            <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.app_developer} onChange={e => setAppForm({...appForm, app_developer: e.target.value})} />
+                                        </div>
+                                        <div>
+                                            <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Version</label>
+                                            <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.app_version} onChange={e => setAppForm({...appForm, app_version: e.target.value})} />
+                                        </div>
+                                        <div>
+                                            <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>App Size</label>
+                                            <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.app_size} onChange={e => setAppForm({...appForm, app_size: e.target.value})} />
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>App Icon URL</label>
+                                        <input type="text" className="search-input" style={{ width: '100%', marginTop: '0.25rem' }} required value={appForm.app_icon} onChange={e => setAppForm({...appForm, app_icon: e.target.value})} />
+                                    </div>
+
+                                    <div>
+                                        <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Description</label>
+                                        <textarea className="search-input" style={{ width: '100%', height: '80px', marginTop: '0.25rem', padding: '0.5rem' }} required value={appForm.description} onChange={e => setAppForm({...appForm, description: e.target.value})}></textarea>
+                                    </div>
+
+                                    <div>
+                                        <label style={{ fontSize: '0.85rem', fontWeight: 600 }}>Key Features (One per line)</label>
+                                        <textarea className="search-input" style={{ width: '100%', height: '80px', marginTop: '0.25rem', padding: '0.5rem' }} value={appForm.features} onChange={e => setAppForm({...appForm, features: e.target.value})}></textarea>
+                                    </div>
+
+                                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
+                                        <button type="button" onClick={() => setShowAppFormModal(false)} className="btn-cancel-download">Cancel</button>
+                                        <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>Save App</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* MODAL 3: Interactive APK Download 5-Second Countdown */}
+                    {downloadModalApp && (
+                        <div className="modal-overlay active">
+                            <div className="modal-box" style={{ textAlign: 'center', maxWidth: '460px' }}>
+                                <div style={{ width: '70px', height: '70px', background: 'var(--play-green-light)', color: 'var(--play-green)', fontSize: '2.2rem', fontWeight: 800, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem auto', border: '2px solid var(--play-green)', boxShadow: '0 4px 12px rgba(1,135,95,0.2)' }}>
+                                    {downloadComplete ? '✓' : downloadTimer}
+                                </div>
+
+                                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.4rem', fontWeight: 700, marginBottom: '0.4rem', color: 'var(--text-main)' }}>
+                                    {downloadComplete ? 'Download Ready!' : `Preparing ${downloadModalApp.title} APK...`}
+                                </h3>
+
+                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+                                    {downloadComplete 
+                                        ? 'Your APK package is ready. Click the button below to download.'
+                                        : `Your APK file download will start in ${downloadTimer} seconds...`}
+                                </p>
+
+                                <div style={{ background: 'var(--bg-surface)', height: '10px', borderRadius: '10px', overflow: 'hidden', marginBottom: '1.75rem', border: '1px solid var(--border-color)' }}>
+                                    <div style={{ width: `${((5 - downloadTimer) / 5) * 100}%`, height: '100%', background: 'var(--play-green)', transition: 'width 0.2s linear' }}></div>
+                                </div>
+
+                                <div style={{ display: 'flex', gap: '0.85rem', justifyContent: 'center' }}>
+                                    {!downloadComplete ? (
+                                        <button onClick={() => { setDownloading(false); setDownloadModalApp(null); }} className="btn-cancel-download">
+                                            Cancel Download
+                                        </button>
+                                    ) : (
+                                        <button onClick={triggerDirectDownload} className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                                            Download APK Package Now
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* MODAL 4: Screenshot Preview Lightbox */}
+                    {previewScreenshot && (
+                        <div className="modal-overlay active" onClick={() => setPreviewScreenshot(null)}>
+                            <div className="modal-box" style={{ maxWidth: '850px', background: 'transparent', border: 'none', boxShadow: 'none', padding: 0, textAlign: 'center' }}>
+                                <img src={previewScreenshot} alt="Preview" style={{ maxWidth: '100%', maxHeight: '85vh', borderRadius: '16px', boxShadow: '0 20px 50px rgba(0,0,0,0.8)' }} />
+                                <p style={{ color: '#FFF', marginTop: '1rem', fontSize: '0.9rem' }}>Click anywhere to close preview</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>

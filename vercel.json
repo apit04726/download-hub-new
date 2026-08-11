@@ -1,22 +1,10 @@
 {
   "version": 2,
-  "builds": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "index.php",
-      "use": "vercel-php",
-      "config": {
-        "includeFiles": ["**"]
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(uploads|wp-content|favicon.svg|data_store.json)(.*)",
-      "dest": "/$1$2"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.php"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
