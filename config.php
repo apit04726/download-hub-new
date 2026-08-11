@@ -24,7 +24,12 @@ define('SITE_TAGLINE', 'Premium Android Apps & Games Portal');
 // Dynamic base URL detection
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https://' : 'http://';
 $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$script_dir = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
+$raw_dir = trim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
+if ($raw_dir === 'api' || empty($raw_dir) || $raw_dir === '.') {
+    $script_dir = '';
+} else {
+    $script_dir = '/' . $raw_dir;
+}
 define('SITE_URL', rtrim($protocol . $host . $script_dir, '/'));
 
 define('UPLOADS_DIR', __DIR__ . '/uploads/');
