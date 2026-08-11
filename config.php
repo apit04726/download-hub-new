@@ -5,13 +5,22 @@
  * Compatible with Localhost, MAMP, Vercel, Netlify, and Shared Hosting
  */
 
-@ini_set('upload_max_filesize', '100M');
-@ini_set('post_max_size', '110M');
-@ini_set('memory_limit', '256M');
-@ini_set('max_execution_time', '300');
-@ini_set('max_input_time', '300');
-if (function_exists('set_time_limit')) {
-    @set_time_limit(0);
+// Writable session path for Serverless / Lambda environments (Vercel)
+if (function_exists('session_save_path') && session_status() === PHP_SESSION_NONE) {
+    @session_save_path('/tmp');
+}
+@ini_set('session.save_path', '/tmp');
+
+// Safe ini_set configuration
+if (!getenv('VERCEL') && !isset($_ENV['VERCEL']) && !isset($_SERVER['VERCEL'])) {
+    @ini_set('upload_max_filesize', '100M');
+    @ini_set('post_max_size', '110M');
+    @ini_set('memory_limit', '256M');
+    @ini_set('max_execution_time', '300');
+    @ini_set('max_input_time', '300');
+    if (function_exists('set_time_limit')) {
+        @set_time_limit(0);
+    }
 }
 
 if (!defined('ABSPATH')) {

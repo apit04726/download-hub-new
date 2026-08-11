@@ -6,6 +6,11 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+if (function_exists('session_save_path') && session_status() === PHP_SESSION_NONE) {
+    @session_save_path('/tmp');
+}
+@ini_set('session.save_path', '/tmp');
+
 try {
     $root = dirname(__DIR__);
     chdir($root);
