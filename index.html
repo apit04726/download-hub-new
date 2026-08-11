@@ -208,10 +208,22 @@
         ];
 
         function App() {
-            // Persistent Apps state from localStorage or INITIAL_APPS fallback
+            // Persistent Apps state with cache-busting for updated image assets
             const [apps, setApps] = React.useState(() => {
-                const saved = localStorage.getItem('download_hub_apps');
-                return saved ? JSON.parse(saved) : INITIAL_APPS;
+                const saved = localStorage.getItem('download_hub_apps_v2');
+                if (saved) {
+                    try {
+                        const parsed = JSON.parse(saved);
+                        const sg = parsed.find(a => a.id === 'socialgo');
+                        if (!sg || !sg.acf || !sg.acf.app_icon || sg.acf.app_icon.includes('unsplash')) {
+                            localStorage.setItem('download_hub_apps_v2', JSON.stringify(INITIAL_APPS));
+                            return INITIAL_APPS;
+                        }
+                        return parsed;
+                    } catch (e) {}
+                }
+                localStorage.setItem('download_hub_apps_v2', JSON.stringify(INITIAL_APPS));
+                return INITIAL_APPS;
             });
 
             // View Routing: 'home', 'details', 'admin'
@@ -258,7 +270,7 @@
 
             // Save apps to localStorage whenever apps array changes
             React.useEffect(() => {
-                localStorage.setItem('download_hub_apps', JSON.stringify(apps));
+                localStorage.setItem('download_hub_apps_v2', JSON.stringify(apps));
             }, [apps]);
 
             // Handle Download Timer countdown
