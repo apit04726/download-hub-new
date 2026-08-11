@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.php": {
-      "runtime": "vercel-php@0.6.0"
+  "builds": [
+    {
+      "src": "api/index.php",
+      "use": "vercel-php"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(uploads|wp-content|favicon.svg|data_store.json)(.*)",
