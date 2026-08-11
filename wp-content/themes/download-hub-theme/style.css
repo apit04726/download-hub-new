@@ -1,0 +1,1461 @@
+/*
+Theme Name: Download-Hub Google Play Theme
+Theme URI: http://downloadhub.local
+Author: Download-Hub Team
+Description: Exact Google Play Store UI theme for Android App & APK downloading platform.
+Version: 3.5.0
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+:root {
+    --bg-main: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --bg-surface: #F8F9FA;
+    --bg-hover: #F1F3F4;
+    --border-color: #E8EAED;
+    --border-glow: #01875F;
+    
+    --play-green: #01875F;
+    --play-green-hover: #00704F;
+    --play-green-light: rgba(1, 135, 95, 0.08);
+    
+    --text-main: #202124;
+    --text-muted: #5F6368;
+    --text-dim: #80868B;
+    
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-play: 28px;
+    --radius-full: 9999px;
+    
+    --shadow-card: 0 1px 3px rgba(60,64,67,0.12), 0 1px 2px rgba(60,64,67,0.24);
+    --shadow-hero-icon: 0 12px 28px rgba(0, 0, 0, 0.15);
+    
+    --font-heading: 'Google Sans', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Dark Mode Option */
+[data-theme="dark"] {
+    --bg-main: #1F1F1F;
+    --bg-card: #2B2B2B;
+    --bg-surface: #202124;
+    --bg-hover: #353535;
+    --border-color: #3C4043;
+    
+    --text-main: #E8EAED;
+    --text-muted: #BDC1C6;
+    --text-dim: #9AA0A6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Strict SVG constraints */
+svg {
+    display: inline-block !important;
+    vertical-align: middle;
+}
+
+.brand-logo svg {
+    width: 28px !important;
+    height: 28px !important;
+    min-width: 28px !important;
+    max-width: 28px !important;
+    flex-shrink: 0;
+}
+
+.search-icon {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+/* Header Navbar - Google Play Style */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 2rem;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.play-green-text {
+    color: var(--play-green);
+}
+
+.play-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.play-nav-item {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 0.45rem 1.1rem;
+    border-radius: var(--radius-full);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.play-nav-item:hover {
+    color: var(--play-green);
+    background: var(--play-green-light);
+}
+
+.play-nav-item.active {
+    color: #FFFFFF;
+    background: var(--play-green);
+    box-shadow: 0 4px 12px rgba(1, 135, 95, 0.28);
+}
+
+.play-nav-item.active::after {
+    display: none;
+}
+
+.search-bar-wrap {
+    flex: 1;
+    max-width: 450px;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    padding: 0.65rem 1.25rem 0.65rem 2.8rem;
+    color: var(--text-main);
+    font-size: 0.92rem;
+    outline: none;
+    background: var(--bg-main);
+    border-color: var(--play-green);
+    box-shadow: 0 0 0 3px var(--play-green-light);
+}
+
+.search-icon {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-dim);
+    pointer-events: none;
+}
+
+.search-kbd {
+    position: absolute;
+    right: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.btn-primary {
+    background: var(--play-green);
+    color: #FFFFFF;
+    font-weight: 600;
+    padding: 0.55rem 1.5rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--play-green-hover);
+}
+
+.admin-badge-pill {
+    background: var(--play-green-light);
+    color: var(--play-green);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+}
+
+.admin-badge-pill:hover {
+    background: var(--play-green);
+    color: #FFFFFF;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.icon-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+}
+
+/* Layout Wrapper */
+.layout-container {
+    max-width: 1320px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    min-height: 65vh;
+}
+
+/* Google Play Hero Banner */
+.play-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.play-hero-left {
+    flex: 1;
+}
+
+.play-hero-title {
+    font-family: var(--font-heading);
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.15;
+    margin-bottom: 0.35rem;
+}
+
+.play-hero-company {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--play-green);
+    margin-bottom: 1.5rem;
+}
+
+.play-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.play-stat-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.play-stat-val {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.play-stat-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.play-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.btn-install {
+    background: var(--play-green);
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.75rem 2.25rem;
+    border-radius: var(--radius-sm);
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s ease;
+}
+
+.btn-install:hover {
+    background: var(--play-green-hover);
+}
+
+.btn-secondary-action {
+    background: transparent;
+    border: none;
+    color: var(--play-green);
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+}
+
+.btn-secondary-action:hover {
+    background: var(--play-green-light);
+}
+
+.device-compatibility {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.play-hero-right {
+    flex-shrink: 0;
+}
+
+.play-hero-app-icon {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-play);
+    object-fit: cover;
+    box-shadow: var(--shadow-hero-icon);
+}
+
+/* Screenshots Slider Carousel - Google Play Style */
+.play-screenshots-container {
+    position: relative;
+    margin-bottom: 3.5rem;
+    padding: 0 3.25rem;
+}
+
+.play-screenshots-scroll {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding: 0.5rem 0.25rem 1rem 0.25rem;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+}
+
+.play-screenshots-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.screenshot-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.play-screenshot-item {
+    width: 220px;
+    height: 390px;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid var(--border-color);
+}
+
+.screenshot-wrapper:hover .play-screenshot-item {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+.screenshot-overlay-zoom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.screenshot-wrapper:hover .screenshot-overlay-zoom {
+    opacity: 1;
+}
+
+.screenshot-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+    z-index: 50;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.screenshot-arrow:hover {
+    background: var(--play-green);
+    color: #FFFFFF;
+    border-color: var(--play-green);
+    transform: translateY(-50%) scale(1.08);
+    box-shadow: 0 12px 28px rgba(1, 135, 95, 0.35);
+}
+
+.arrow-left { left: 0 !important; }
+.arrow-right { right: 0 !important; }
+
+/* Main Content Grid (Left Details + Right Sidebar) */
+.play-main-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3.5rem;
+    margin-bottom: 4rem;
+}
+
+.play-content-left {
+    min-width: 0;
+}
+
+.play-section-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.play-description {
+    font-size: 0.98rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+}
+
+/* Modern Specs Cards Grid - 2 Columns Responsive System */
+.play-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.15rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 600px) {
+    .play-specs-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.spec-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s ease;
+}
+
+.spec-card:hover {
+    border-color: var(--play-green);
+}
+
+.spec-icon {
+    font-size: 1.5rem;
+    width: 44px;
+    height: 44px;
+    background: var(--bg-main);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.spec-cell-label {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.2rem;
+}
+
+.spec-cell-val {
+    font-size: 0.98rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+/* Key Features Checklist - Fully Responsive 2 Columns */
+.features-checklist, .play-features-grid {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 3.5rem;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+}
+
+@media (max-width: 580px) {
+    .features-checklist, .play-features-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+}
+
+.features-checklist li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    background: var(--bg-surface);
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.check-icon {
+    width: 24px;
+    height: 24px;
+    background: var(--play-green-light);
+    color: var(--play-green);
+    font-weight: 800;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+/* Right Sidebar (App Support & Similar Apps) */
+.play-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.sidebar-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+}
+
+.sidebar-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 1rem;
+}
+
+.similar-app-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.similar-app-item:hover {
+    transform: translateX(3px);
+}
+
+.similar-app-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.similar-app-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.similar-app-name {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.similar-app-company {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.similar-app-rating {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Apps Grid for Homepage - Professional Store Style */
+.play-hero-banner {
+    padding: 2.25rem 2.5rem;
+    background: var(--bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    margin-bottom: 2.5rem;
+}
+
+.play-hero-banner-title {
+    font-family: var(--font-heading);
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.4rem;
+}
+
+.play-hero-banner-sub {
+    font-size: 1rem;
+    color: var(--text-muted);
+}
+
+.play-apps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+    gap: 1.85rem;
+    margin-bottom: 3.5rem;
+}
+
+.play-app-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 1px 3px rgba(60,64,67,0.06);
+}
+
+.play-app-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    border-color: var(--play-green);
+}
+
+.card-cat-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--play-green);
+    background: var(--play-green-light);
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-full);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid rgba(1, 135, 95, 0.15);
+    transition: all 0.2s ease;
+}
+
+.play-app-card:hover .card-cat-tag {
+    background: var(--play-green);
+    color: #FFFFFF;
+    border-color: var(--play-green);
+}
+
+.play-card-top {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.play-card-icon {
+    width: 90px !important;
+    height: 90px !important;
+    border-radius: 18px !important;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08) !important;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.2s ease;
+}
+
+.play-app-card:hover .play-card-icon {
+    transform: scale(1.02);
+}
+
+.play-card-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.play-card-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 0.25rem;
+}
+
+.play-card-company {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 0.6rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-card-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+}
+
+.rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    background: rgba(245, 158, 11, 0.12);
+    color: var(--accent-amber);
+    font-weight: 700;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+}
+
+.version-badge {
+    background: var(--play-green-light);
+    color: var(--play-green);
+    font-weight: 600;
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+}
+
+.size-badge {
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.15rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.play-card-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.45;
+    min-height: 2.6rem;
+}
+
+.play-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.download-count {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 500;
+}
+
+.play-card-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-view-details {
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.45rem 0.85rem;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-view-details:hover {
+    background: var(--play-green-light);
+    color: var(--play-green);
+    border-color: var(--play-green);
+}
+
+.btn-install-sm {
+    background: var(--play-green);
+    color: #FFFFFF;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: none;
+    padding: 0.45rem 1.15rem;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(1, 135, 95, 0.25);
+}
+
+.btn-install-sm:hover {
+    background: var(--play-green-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(1, 135, 95, 0.4);
+}
+
+/* Admin Upload Dashboard Responsive Rules */
+.admin-header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    gap: 1rem;
+}
+
+.admin-passcode-form {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.admin-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.admin-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 650px) {
+    .admin-header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.85rem;
+    }
+    .admin-passcode-form {
+        flex-direction: column;
+    }
+    .admin-grid-2, .admin-grid-3 {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem;
+    }
+}
+
+/* Modal Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    max-width: 520px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    transform: scale(0.92);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-box {
+    transform: scale(1);
+}
+
+/* Multi-Column Professional Google Play Footer */
+.site-footer {
+    border-top: 1px solid var(--border-color);
+    background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-main) 100%);
+    padding: 3.5rem 2rem 2.5rem 2rem;
+    margin-top: 4rem;
+}
+
+[data-theme="light"] .site-footer {
+    background: #F8F9FA;
+    border-top-color: #E5E7EB;
+}
+
+.footer-container {
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="light"] .footer-grid {
+    border-bottom-color: #E5E7EB;
+}
+
+.footer-col-title {
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 1.15rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    display: inline-block;
+}
+
+.footer-col-title::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 3px;
+    background: var(--play-green);
+    border-radius: 2px;
+    margin-top: 0.35rem;
+}
+
+.footer-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    margin-bottom: 1.25rem;
+}
+
+.footer-links {
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+}
+
+.footer-links a {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--play-green);
+}
+
+.security-badge-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--play-green-light);
+    color: var(--play-green);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.45rem 0.95rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(1, 135, 95, 0.2);
+}
+
+.footer-bottom-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.footer-bottom-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.footer-bottom-links span {
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.footer-bottom-links span:hover {
+    color: var(--text-main);
+}
+
+.lang-selector {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Comprehensive Responsive System (200px to 995px)
+   ========================================================================== */
+
+/* Tablet & Compact Laptops (769px to 995px) */
+@media (max-width: 995px) {
+    .nav-container {
+        padding: 0 1rem;
+        gap: 1rem;
+    }
+    .layout-container {
+        padding: 0 1.25rem;
+        margin: 1.5rem auto;
+    }
+    .play-hero {
+        gap: 2rem;
+    }
+    .play-hero-title {
+        font-size: 2.25rem;
+    }
+    .play-main-layout {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+    .play-sidebar {
+        gap: 1.25rem;
+    }
+    .features-checklist, .play-features-grid {
+        margin-bottom: 0;
+    }
+    .site-footer {
+        padding: 3rem 1.5rem 2rem 1.5rem;
+        margin-top: 0;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2.25rem;
+    }
+    .brand-col {
+        grid-column: span 2;
+        padding-bottom: 1rem;
+        border-bottom: 1px dashed var(--border-color);
+    }
+    .play-apps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+}
+
+/* Medium Mobile & Small Tablets (481px to 768px) */
+@media (max-width: 768px) {
+    .site-header {
+        padding: 0.6rem 1rem;
+    }
+    .nav-container {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+    .brand-logo {
+        font-size: 1.15rem;
+    }
+    .play-nav-links {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.35rem;
+        gap: 1.25rem;
+        scrollbar-width: none;
+    }
+    .play-nav-links::-webkit-scrollbar {
+        display: none;
+    }
+    .search-bar-wrap {
+        order: 2;
+        max-width: none;
+        flex: 1;
+    }
+    .search-input {
+        font-size: 0.88rem;
+        padding: 0.5rem 1rem 0.5rem 2.4rem;
+    }
+    .search-kbd {
+        display: none;
+    }
+    .play-hero {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    .play-hero-left {
+        width: 100%;
+    }
+    .play-hero-title {
+        font-size: 2rem;
+    }
+    .play-stats-row {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+    .play-hero-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .btn-install {
+        width: 100%;
+        justify-content: center;
+    }
+    .device-compatibility {
+        justify-content: center;
+    }
+    .play-hero-app-icon {
+        width: 130px;
+        height: 130px;
+        border-radius: 22px;
+    }
+    .play-screenshot-item {
+        width: 180px;
+        height: 320px;
+        border-radius: 16px;
+    }
+    .play-specs-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.85rem;
+    }
+    .spec-card {
+        padding: 0.85rem 1rem;
+    }
+    .play-apps-grid {
+        grid-template-columns: 1fr;
+    }
+    .site-footer {
+        padding: 2.5rem 1.25rem 1.5rem 1.25rem;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    .brand-col {
+        grid-column: span 2;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .brand-col .brand-logo {
+        justify-content: center;
+    }
+    .footer-bottom-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    .footer-bottom-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+/* Small Mobile & Foldable Devices (200px to 480px) */
+@media (max-width: 480px) {
+    .site-header {
+        padding: 0.5rem 0.75rem;
+    }
+    .nav-container {
+        gap: 0.5rem;
+    }
+    .brand-logo {
+        font-size: 1.05rem;
+        gap: 0.4rem;
+    }
+    .brand-logo-icon {
+        width: 28px;
+        height: 28px;
+    }
+    .brand-logo-icon svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    .admin-badge-pill {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.78rem;
+    }
+    .layout-container {
+        padding: 0 0.85rem;
+        margin: 1.25rem auto;
+    }
+    .play-hero-banner {
+        padding: 1.5rem 1.25rem;
+    }
+    .play-hero-banner-title {
+        font-size: 1.5rem;
+    }
+    .play-hero-banner-sub {
+        font-size: 0.88rem;
+    }
+    .play-hero-title {
+        font-size: 1.65rem;
+    }
+    .play-hero-company {
+        font-size: 0.95rem;
+    }
+    .play-stats-row {
+        flex-direction: row;
+        gap: 0.85rem;
+        justify-content: space-between;
+    }
+    .play-stat-col {
+        align-items: center;
+    }
+    .play-stat-col[style*="padding-left"] {
+        padding-left: 0.85rem !important;
+    }
+    .play-stat-val {
+        font-size: 0.95rem;
+    }
+    .play-stat-sub {
+        font-size: 0.72rem;
+    }
+    .play-hero-app-icon {
+        width: 100px;
+        height: 100px;
+        border-radius: 18px;
+    }
+    .play-app-card {
+        padding: 1.15rem;
+        border-radius: 16px;
+    }
+    .play-card-top {
+        gap: 0.85rem;
+    }
+    .play-card-icon {
+        width: 70px !important;
+        height: 70px !important;
+        border-radius: 14px !important;
+    }
+    .play-card-name {
+        font-size: 1.05rem;
+    }
+    .play-card-company {
+        font-size: 0.8rem;
+    }
+    .play-card-footer {
+        flex-direction: column;
+        gap: 0.85rem;
+        align-items: stretch;
+    }
+    .download-count {
+        justify-content: center;
+    }
+    .btn-install-sm {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+    .play-screenshot-item {
+        width: 187px;
+        height: 270px;
+        border-radius: 14px;
+    }
+    .play-screenshots-container {
+        padding: 0 2.25rem;
+    }
+    .screenshot-arrow {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        z-index: 50;
+    }
+    .arrow-left { left: 0 !important; }
+    .arrow-right { right: 0 !important; }
+    .device-compatibility {
+        justify-content: center;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    .play-specs-grid {
+        grid-template-columns: 1fr;
+    }
+    .spec-card[style*="grid-column"] {
+        grid-column: auto !important;
+    }
+    .modal-box {
+        padding: 1.5rem;
+        margin: 0 0.5rem;
+    }
+    .play-main-layout {
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    .play-sidebar {
+        gap: 1rem;
+    }
+    .features-checklist, .play-features-grid {
+        margin-bottom: 0;
+    }
+    .site-footer {
+        padding: 2rem 0.85rem 1.25rem 0.85rem;
+        margin-top: 0;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 1.75rem;
+        text-align: center;
+    }
+    .brand-col {
+        grid-column: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .brand-col .brand-logo {
+        justify-content: center;
+    }
+    .footer-links {
+        justify-content: center;
+    }
+    .security-badge-box {
+        margin: 0 auto;
+    }
+    .footer-bottom-bar {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.85rem;
+        padding-top: 1.5rem;
+    }
+    .footer-bottom-links {
+        justify-content: center;
+        gap: 0.85rem;
+        font-size: 0.8rem;
+    }
+    .admin-submit-btn {
+        font-size: 0.88rem !important;
+        padding: 0.75rem 1rem !important;
+        white-space: normal;
+    }
+    h2 {
+        font-size: 1.35rem !important;
+    }
+}

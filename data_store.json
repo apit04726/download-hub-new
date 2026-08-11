@@ -1,0 +1,110 @@
+[
+    {
+        "id": "socialgo",
+        "title": "SocialGo",
+        "tagline": "Next-Gen AI Social Network, Reels & Encrypted Chat",
+        "category": "Tools",
+        "category_slug": "tools",
+        "acf": {
+            "apk_file": "uploads/apks/SocialGo.apk",
+            "app_version": "v3.4.1",
+            "app_size": "82.4 MB",
+            "app_rating": "4.9",
+            "rating_count": "24,800",
+            "app_developer": "SocialGo Tech Inc.",
+            "package_name": "com.socialgo.app",
+            "min_android": "Android 8.0+",
+            "release_date": "August 10, 2026",
+            "download_count": 18456,
+            "app_icon": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&auto=format&fit=crop&q=90",
+            "app_banner": "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&auto=format&fit=crop&q=90",
+            "screenshots": [
+                "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80"
+            ],
+            "features": [
+                "End-to-End Encrypted Instant Messaging & Group Chats",
+                "Built-in AI Assistant for Post Writing & Image Enhancements",
+                "Ultra HD 60fps Voice & 4K Video Calling with Spatial Audio",
+                "Trending Reels, Stories & Creative Filters with Custom Soundtracks",
+                "Dark Mode, Custom Chat Themes & Custom Notification Tones",
+                "Zero-Data Mining Guarantee with Private Cloud Backups"
+            ]
+        },
+        "description": "SocialGo is the ultimate next-generation social networking and messaging platform designed for speed, security, and vibrant community engagement. Connect with friends, share high-resolution videos, explore trending stories, and collaborate seamlessly using integrated AI tools.\n\nWhether you're looking for crystal-clear HD voice calls, customizable group channels, or private end-to-end encrypted messaging, SocialGo delivers an intuitive, ad-free mobile experience."
+    },
+    {
+        "id": "newshub",
+        "title": "NewsHub",
+        "tagline": "Real-Time Global News, Breaking Alerts & Audio Briefings",
+        "category": "Productivity",
+        "category_slug": "productivity",
+        "acf": {
+            "apk_file": "uploads/apks/NewsHub.apk",
+            "app_version": "v2.8.0",
+            "app_size": "77.7 MB",
+            "app_rating": "4.8",
+            "rating_count": "18,200",
+            "app_developer": "NewsHub Global Media",
+            "package_name": "com.newshub.global",
+            "min_android": "Android 7.0+",
+            "release_date": "August 9, 2026",
+            "download_count": 14201,
+            "app_icon": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&auto=format&fit=crop&q=90",
+            "app_banner": "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&auto=format&fit=crop&q=90",
+            "screenshots": [
+                "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=800&auto=format&fit=crop&q=80"
+            ],
+            "features": [
+                "Instant Breaking News Push Notifications for Global Events",
+                "Personalized Feed tailored across Technology, Finance & Sports",
+                "Offline Reading Mode: Save articles for reading without Internet",
+                "AI Audio News Reader: Listen to full articles hands-free",
+                "Verified Fact-Checking Badges & Multi-Source Coverage",
+                "Distraction-Free OLED Dark Mode & Adjustable Typography"
+            ]
+        },
+        "description": "Stay informed with NewsHub, your premier destination for unbiased global news, live economic updates, and trending headlines. Powered by over 500 international journalists and real-time news syndicates, NewsHub delivers stories that matter directly to your fingertips.\n\nEnjoy customizable reading feeds, offline article saving, and smart audio narration so you can stay updated while commuting or working out."
+    },
+    {
+        "id": "farm-management",
+        "title": "Farm Management",
+        "tagline": "Smart Agriculture, Crop Yield AI & Livestock Tracking",
+        "category": "Tools",
+        "category_slug": "tools",
+        "acf": {
+            "apk_file": "uploads/apks/farm-management.apk",
+            "app_version": "v1.5.2",
+            "app_size": "96.2 MB",
+            "app_rating": "4.9",
+            "rating_count": "12,400",
+            "app_developer": "AgriTech Digital Solutions",
+            "package_name": "com.agritech.farm",
+            "min_android": "Android 8.0+",
+            "release_date": "August 8, 2026",
+            "download_count": 9801,
+            "app_icon": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=90",
+            "app_banner": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=90",
+            "screenshots": [
+                "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
+                "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+            ],
+            "features": [
+                "Field Soil Monitoring & AI Crop Disease Detection via Camera",
+                "Livestock Health Logging, Medical History & Birth Tracking",
+                "Smart Irrigation Scheduling with Hyper-Local Weather Integration",
+                "Expense, Fertilizer & Equipment Maintenance Cost Reports",
+                "GPS Field Boundary Mapping & Harvest Yield Projections",
+                "Multi-User Team Access with Offline Field Data Synchronization"
+            ]
+        },
+        "description": "Farm Management is an enterprise-grade digital companion designed for modern agriculture, livestock managers, and independent growers. Automate your daily farming operations, track soil moisture levels, monitor herd health, and increase crop yields with AI-powered insights.\n\nMap field boundaries using precision GPS, record fertilizer logs, and access real-time market crop prices to ensure optimal profitability year-round."
+    }
+]
