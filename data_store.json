@@ -2,7 +2,7 @@
     {
         "id": "socialgo",
         "title": "SocialGo",
-        "tagline": "Next-Gen AI Social Network, Reels & Encrypted Chat",
+        "tagline": "Smarter Social Media Management with AI",
         "category": "Tools",
         "category_slug": "tools",
         "acf": {
@@ -26,15 +26,14 @@
                 "uploads/images/social-5.jpeg"
             ],
             "features": [
-                "End-to-End Encrypted Instant Messaging & Group Chats",
-                "Built-in AI Assistant for Post Writing & Image Enhancements",
-                "Ultra HD 60fps Voice & 4K Video Calling with Spatial Audio",
-                "Trending Reels, Stories & Creative Filters with Custom Soundtracks",
-                "Dark Mode, Custom Chat Themes & Custom Notification Tones",
-                "Zero-Data Mining Guarantee with Private Cloud Backups"
+                "AI-powered content generation & rewriting",
+                "Multi-platform publishing (Facebook, Instagram, X, LinkedIn & more)",
+                "Smart post scheduling & content queue",
+                "Real-time analytics & engagement insights",
+                "Performance tracking with a clean, modern UI"
             ]
         },
-        "description": "SocialGo is the ultimate next-generation social networking and messaging platform designed for speed, security, and vibrant community engagement. Connect with friends, share high-resolution videos, explore trending stories, and collaborate seamlessly using integrated AI tools.\n\nWhether you're looking for crystal-clear HD voice calls, customizable group channels, or private end-to-end encrypted messaging, SocialGo delivers an intuitive, ad-free mobile experience."
+        "description": "🚀 Introducing SocialGo – Smarter Social Media Management with AI\n\nManaging multiple social media accounts shouldn't be complicated. That's why I built SocialGo — an AI-powered social media management platform designed to help creators, businesses, and marketers create, schedule, publish, and analyze content from one intuitive dashboard."
     },
     {
         "id": "newshub",
