@@ -3,6 +3,12 @@
  * Main WordPress Router & Bootstrap - Download-Hub
  */
 
+// Writable session path for Vercel / AWS Lambda
+if (function_exists('session_save_path') && session_status() === PHP_SESSION_NONE) {
+    @session_save_path('/tmp');
+}
+@ini_set('session.save_path', '/tmp');
+
 require_once __DIR__ . '/config.php';
 
 $request_uri = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
