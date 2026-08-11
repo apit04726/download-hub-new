@@ -404,7 +404,7 @@
                 if (!downloadModalApp) return;
                 let apkPath = downloadModalApp.acf?.apk_file;
                 if (!apkPath || apkPath === '#') {
-                    apkPath = `apk/${downloadModalApp.id}.apk`;
+                    apkPath = `uploads/apks/${downloadModalApp.id}.apk`;
                 }
                 
                 // Trigger download link
