@@ -351,16 +351,7 @@
                                         <span className="card-cat-tag">{selectedApp.category}</span>
                                     </div>
 
-                                    {isAdminLoggedIn && (
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                            <button onClick={() => openAppForm(selectedApp)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'var(--play-green)', color: '#FFF', padding: '0.45rem 1rem', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600, border: 'none', cursor: 'pointer' }}>
-                                                ✏️ Edit App
-                                            </button>
-                                            <button onClick={() => handleDeleteApp(selectedApp.id)} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(239, 68, 68, 0.12)', color: '#EF4444', border: '1px solid #EF4444', padding: '0.45rem 0.95rem', borderRadius: 'var(--radius-full)', fontSize: '0.85rem', fontWeight: 600, cursor: 'pointer' }}>
-                                                🗑️ Delete App
-                                            </button>
-                                        </div>
-                                    )}
+
                                 </div>
 
                                 {/* Hero Section */}
