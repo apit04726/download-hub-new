@@ -402,15 +402,21 @@
             // Trigger actual direct file download
             const triggerDirectDownload = () => {
                 if (!downloadModalApp) return;
-                const apkPath = downloadModalApp.acf?.apk_file || '#';
+                let apkPath = downloadModalApp.acf?.apk_file;
+                if (!apkPath || apkPath === '#') {
+                    apkPath = `apk/${downloadModalApp.id}.apk`;
+                }
                 
-                // Trigger download or dynamic blob fallback
+                // Trigger download link
                 const link = document.createElement('a');
                 link.href = apkPath;
-                link.download = `${downloadModalApp.id}.apk`;
+                link.rel = 'noopener';
+                link.setAttribute('download', `${downloadModalApp.id}.apk`);
                 document.body.appendChild(link);
                 link.click();
-                document.body.removeChild(link);
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                }, 100);
 
                 setDownloadModalApp(null);
             };
