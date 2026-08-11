@@ -16,13 +16,14 @@
             "min_android": "Android 8.0+",
             "release_date": "August 10, 2026",
             "download_count": 18456,
-            "app_icon": "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=300&auto=format&fit=crop&q=90",
-            "app_banner": "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1200&auto=format&fit=crop&q=90",
+            "app_icon": "uploads/images/icon.png",
+            "app_banner": "uploads/images/social-1(1).jpeg",
             "screenshots": [
-                "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1577563908411-5077b6dc7624?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80"
+                "uploads/images/social-1(1).jpeg",
+                "uploads/images/social-2.jpeg",
+                "uploads/images/social-3.jpeg",
+                "uploads/images/social-4.jpeg",
+                "uploads/images/social-5.jpeg"
             ],
             "features": [
                 "End-to-End Encrypted Instant Messaging & Group Chats",
