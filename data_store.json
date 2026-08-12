@@ -77,8 +77,8 @@
     },
     {
         "id": "farm-management",
-        "title": "Farm Management",
-        "tagline": "Smart Agriculture, Crop Yield AI & Livestock Tracking",
+        "title": "Farm Management App",
+        "tagline": "Smart Farm Management App",
         "category": "Tools",
         "category_slug": "tools",
         "acf": {
@@ -90,25 +90,29 @@
             "app_developer": "AgriTech Digital Solutions",
             "package_name": "com.agritech.farm",
             "min_android": "Android 8.0+",
-            "release_date": "August 8, 2026",
+            "release_date": "August 12, 2026",
             "download_count": 9801,
-            "app_icon": "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=300&auto=format&fit=crop&q=90",
-            "app_banner": "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&auto=format&fit=crop&q=90",
+            "app_icon": "uploads/images/icon 3.png",
+            "app_banner": "uploads/images/farm-1.jpeg",
             "screenshots": [
-                "https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=800&auto=format&fit=crop&q=80"
+                "uploads/images/farm-1.jpeg",
+                "uploads/images/farm-2.jpeg",
+                "uploads/images/farm-3.jpeg",
+                "uploads/images/farm-4.jpeg",
+                "uploads/images/farm-5.jpeg",
+                "uploads/images/farm-6.jpeg"
             ],
             "features": [
-                "Field Soil Monitoring & AI Crop Disease Detection via Camera",
-                "Livestock Health Logging, Medical History & Birth Tracking",
-                "Smart Irrigation Scheduling with Hyper-Local Weather Integration",
-                "Expense, Fertilizer & Equipment Maintenance Cost Reports",
-                "GPS Field Boundary Mapping & Harvest Yield Projections",
-                "Multi-User Team Access with Offline Field Data Synchronization"
+                "🌾 Manage Crops, Plots & Farm Records",
+                "💰 Track Farm Expenses, Income & Sales",
+                "👷 Manage Labor Records & Salaries",
+                "🏪 Check Live Gujarat APMC Mandi Prices",
+                "🗣️ Complete Gujarati Language Support",
+                "🌐 Offline Support with Local Data Storage",
+                "⚡ Fast, Lightweight & Farmer-Friendly Interface",
+                "📱 Simple and Easy-to-use Android App"
             ]
         },
-        "description": "Farm Management is an enterprise-grade digital companion designed for modern agriculture, livestock managers, and independent growers. Automate your daily farming operations, track soil moisture levels, monitor herd health, and increase crop yields with AI-powered insights.\n\nMap field boundaries using precision GPS, record fertilizer logs, and access real-time market crop prices to ensure optimal profitability year-round."
+        "description": "Farm Management App is a simple, lightweight, and highly powerful Android application tailor-made for Indian farmers to digitize and manage their daily agricultural operations. Designed with a clear focus on accessibility, the app offers complete Gujarati language support to ensure that local farmers in Gujarat can seamlessly navigate and maintain their records without any language barrier.\n\nWith this app, farmers can easily organize crop history, assign tasks to farm plots, track daily expenses (like seeds, fertilizers, tractor rental, and fuel), and record agricultural income from crop sales. The built-in labor management module allows hassle-free tracking of workforce hours, attendance, and salary payouts.\n\nA key highlight is the live integration of Gujarat APMC Mandi prices, keeping farmers updated with market rates for various crops across different markets (mandis) in Gujarat. Additionally, the app features full offline functionality, saving all data securely on the local device, meaning farmers can record details in deep rural areas without any active internet connection. Get organized, optimize your costs, and maximize your profits with a digital companion built specifically for you."
     }
 ]
