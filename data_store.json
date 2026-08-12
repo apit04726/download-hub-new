@@ -39,7 +39,7 @@
     {
         "id": "newshub",
         "title": "NewsHub",
-        "tagline": "Real-Time Global News, Breaking Alerts & Audio Briefings",
+        "tagline": "Real-Time News, Trending Headlines & Personalized Feed",
         "category": "Productivity",
         "category_slug": "productivity",
         "acf": {
@@ -51,26 +51,29 @@
             "app_developer": "NewsHub Global Media",
             "package_name": "com.newshub.global",
             "min_android": "Android 7.0+",
-            "release_date": "August 9, 2026",
+            "release_date": "August 12, 2026",
             "download_count": 14201,
-            "app_icon": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=300&auto=format&fit=crop&q=90",
-            "app_banner": "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=1200&auto=format&fit=crop&q=90",
+            "app_icon": "uploads/images/icon 2.png",
+            "app_banner": "uploads/images/news-1.jpeg",
             "screenshots": [
-                "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1495020689067-958852a7765e?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&auto=format&fit=crop&q=80",
-                "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?w=800&auto=format&fit=crop&q=80"
+                "uploads/images/news-1.jpeg",
+                "uploads/images/news-2.jpeg",
+                "uploads/images/news-3.jpeg",
+                "uploads/images/news-1.jpeg",
+                "uploads/images/news-2.jpeg"
             ],
             "features": [
-                "Instant Breaking News Push Notifications for Global Events",
-                "Personalized Feed tailored across Technology, Finance & Sports",
-                "Offline Reading Mode: Save articles for reading without Internet",
-                "AI Audio News Reader: Listen to full articles hands-free",
-                "Verified Fact-Checking Badges & Multi-Source Coverage",
-                "Distraction-Free OLED Dark Mode & Adjustable Typography"
+                "📰 Trending & Local News updates from around the globe",
+                "💼 Sports & Business News with real-time syndication",
+                "🔍 Powerful Search Functionality to instantly find articles",
+                "🔖 Save Articles & Read Later offline mode support",
+                "👤 Developer Profile Integration & clean architecture",
+                "📱 Modern, Responsive & Easy-to-use news reading interface",
+                "🚀 Fast, Smooth Performance with clean navigation experience",
+                "⚡ Real-time news updates and instant push notifications"
             ]
         },
-        "description": "Stay informed with NewsHub, your premier destination for unbiased global news, live economic updates, and trending headlines. Powered by over 500 international journalists and real-time news syndicates, NewsHub delivers stories that matter directly to your fingertips.\n\nEnjoy customizable reading feeds, offline article saving, and smart audio narration so you can stay updated while commuting or working out."
+        "description": "NewsHub is a modern Android news application designed to deliver fast, reliable, and personalized news in a clean and user-friendly interface. It features trending, local, sports, and business news, real-time updates, powerful search, save & read later, developer profile integration, and smooth navigation.\n\nBuilt with a strong focus on modern UI/UX, performance, API integration, and scalable Android architecture, NewsHub provides a simple and seamless news-reading experience."
     },
     {
         "id": "farm-management",
