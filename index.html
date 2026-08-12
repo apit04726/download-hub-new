@@ -175,6 +175,21 @@
                 setDownloadModalApp(null);
             };
 
+            // React Effect to handle APK download countdown
+            React.useEffect(() => {
+                let timer;
+                if (downloading && downloadTimer > 0) {
+                    timer = setTimeout(() => {
+                        setDownloadTimer(downloadTimer - 1);
+                    }, 1000);
+                } else if (downloading && downloadTimer === 0) {
+                    setDownloadComplete(true);
+                    setDownloading(false);
+                    triggerDirectDownload();
+                }
+                return () => clearTimeout(timer);
+            }, [downloading, downloadTimer]);
+
             // Filtered Apps List based on Category and Search Query
             const filteredApps = apps.filter(app => {
                 const matchesCat = selectedCategory === 'all' || 
