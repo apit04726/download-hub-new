@@ -114,6 +114,16 @@
             border-color: #F87171 !important;
             color: #B91C1C !important;
         }
+        @keyframes skeleton-pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 0.35; }
+            100% { opacity: 0.8; }
+        }
+        .skeleton-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            animation: skeleton-pulse 1.4s ease-in-out infinite;
+        }
     </style>
 </head>
 <body>
@@ -129,37 +139,58 @@
             return '/' + url;
         };
 
+        // Parse initial URL path synchronously to prevent initial render flicker
+        const parseInitialRoute = () => {
+            const path = window.location.pathname.replace(/^\/|\/$/g, '').trim();
+            if (path && path !== 'index.html') {
+                return { view: 'details', appId: path.toLowerCase() };
+            }
+            return { view: 'home', appId: null };
+        };
+
         function App() {
+            const initialRoute = React.useMemo(() => parseInitialRoute(), []);
             const [apps, setApps] = React.useState([]);
             const [isLoading, setIsLoading] = React.useState(true);
+            const [currentView, setCurrentView] = React.useState(initialRoute.view);
+            const [selectedAppId, setSelectedAppId] = React.useState(initialRoute.appId);
+            const [selectedCategory, setSelectedCategory] = React.useState('all');
+            const [searchQuery, setSearchQuery] = React.useState('');
 
             // Single Source of Truth: Load data_store.json dynamically from root
             React.useEffect(() => {
                 fetch('/data_store.json?t=' + Date.now())
                     .then(res => res.json())
                     .then(data => {
+                        let loadedApps = data;
                         const localEdits = localStorage.getItem('download_hub_custom_edits');
                         if (localEdits) {
                             try {
-                                setApps(JSON.parse(localEdits));
-                                setIsLoading(false);
-                                return;
+                                loadedApps = JSON.parse(localEdits);
                             } catch (e) {}
                         }
-                        setApps(data);
+                        setApps(loadedApps);
                         setIsLoading(false);
+
+                        // Sync path matching after data load
+                        const path = window.location.pathname.replace(/^\/|\/$/g, '').trim();
+                        if (path && path !== 'index.html') {
+                            const found = loadedApps.find(a => a.id.toLowerCase() === path.toLowerCase());
+                            if (found) {
+                                setCurrentView('details');
+                                setSelectedAppId(found.id);
+                                return;
+                            }
+                        } else {
+                            setCurrentView('home');
+                            setSelectedAppId(null);
+                        }
                     })
                     .catch(err => {
                         console.error("Error loading data_store.json:", err);
                         setIsLoading(false);
                     });
             }, []);
-
-            // View Routing: 'home', 'details'
-            const [currentView, setCurrentView] = React.useState('home');
-            const [selectedAppId, setSelectedAppId] = React.useState(null);
-            const [selectedCategory, setSelectedCategory] = React.useState('all');
-            const [searchQuery, setSearchQuery] = React.useState('');
 
             // Router & Navigation Handler (Syncs React State with Browser Address Bar & History)
             const navigateTo = React.useCallback((view, appId = null, replace = false) => {
@@ -177,22 +208,6 @@
                     }
                 }
             }, []);
-
-            // Initial Route Matcher (Runs once apps data is loaded)
-            React.useEffect(() => {
-                if (apps.length === 0) return;
-                const path = window.location.pathname.replace(/^\/|\/$/g, '').trim();
-                if (path && path !== 'index.html') {
-                    const found = apps.find(a => a.id.toLowerCase() === path.toLowerCase());
-                    if (found) {
-                        setCurrentView('details');
-                        setSelectedAppId(found.id);
-                        return;
-                    }
-                }
-                setCurrentView('home');
-                setSelectedAppId(null);
-            }, [apps]);
 
             // Browser Back/Forward (popstate) Handler
             React.useEffect(() => {
@@ -315,7 +330,7 @@
                 return matchesCat && matchesSearch;
             });
 
-            const selectedApp = apps.find(a => a.id === selectedAppId);
+            const selectedApp = apps.find(a => a.id.toLowerCase() === (selectedAppId || '').toLowerCase());
 
             // Dynamic Social Media Preview Meta Tags (Open Graph & Twitter Cards)
             React.useEffect(() => {
@@ -406,302 +421,343 @@
 
                     {/* MAIN CONTENT AREA */}
                     <main className="layout-container">
-                        {currentView === 'home' && (
-                            <div>
-                                {/* Hero Banner */}
-                                <section className="play-hero-banner">
-                                    <div className="play-hero-banner-content">
-                                        <span className="security-badge-box" style={{ marginBottom: '0.75rem' }}>
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                            100% Malware Free & Play Protect Verified
-                                        </span>
-                                        <h1 className="play-hero-banner-title">Discover & Download Premium Android Apps</h1>
-                                        <p className="play-hero-banner-sub">Your trusted destination for verified, virus-free Android APKs, original app packages, and high-speed direct downloads.</p>
-                                    </div>
-                                </section>
-
-                                {/* Category Chips Filter Bar */}
-                                <div className="play-category-chips-wrap" style={{ marginBottom: '1.75rem', overflowX: 'auto', paddingBottom: '0.5rem', scrollbarWidth: 'none' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                                        {['all','tools','productivity'].map(cat => (
-                                            <button
-                                                key={cat}
-                                                onClick={() => { setSelectedCategory(cat); navigateTo('home', null); }}
-                                                className={`play-chip-item ${selectedCategory === cat ? 'active' : ''}`}
-                                                style={{
-                                                    padding: '0.55rem 1.35rem',
-                                                    borderRadius: 'var(--radius-full)',
-                                                    fontSize: '0.88rem',
-                                                    fontWeight: 600,
-                                                    border: selectedCategory === cat ? 'none' : '1px solid var(--border-color)',
-                                                    background: selectedCategory === cat ? 'var(--play-green)' : 'var(--bg-surface)',
-                                                    color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-main)',
-                                                    cursor: 'pointer',
-                                                    whiteSpace: 'nowrap',
-                                                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
-                                                    boxShadow: selectedCategory === cat ? '0 4px 14px rgba(1, 135, 95, 0.3)' : 'none'
-                                                }}
-                                            >
-                                                {cat === 'all' ? '✨ All Apps' : (cat.charAt(0).toUpperCase() + cat.slice(1))}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Section Header */}
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                        {isLoading ? (
+                            <div style={{ padding: '2.5rem 0' }}>
+                                {currentView === 'details' ? (
                                     <div>
-                                        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)' }}>
-                                            {selectedCategory === 'all' ? 'Recommended Applications' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Apps`}
-                                        </h2>
-                                        <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Selected top rated apps & games</p>
-                                    </div>
-                                    <span style={{ color: 'var(--play-green)', fontWeight: 700, fontSize: '0.9rem' }}>
-                                        {filteredApps.length} Apps Available
-                                    </span>
-                                </div>
-
-                                {/* Apps Grid */}
-                                {filteredApps.length === 0 ? (
-                                    <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginBottom: '3rem' }}>
-                                        <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Apps Found</h3>
-                                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Try searching for another keyword or upload a new app via Admin Portal.</p>
-                                        <button onClick={() => { setSelectedCategory('all'); setSearchQuery(''); navigateTo('home', null); }} className="btn-primary">View All Apps</button>
+                                        <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+                                            <div className="skeleton-box" style={{ width: '110px', height: '110px', borderRadius: '24px' }}></div>
+                                            <div style={{ flex: 1, minWidth: '240px' }}>
+                                                <div className="skeleton-box" style={{ width: '65%', height: '32px', borderRadius: '8px', marginBottom: '1rem' }}></div>
+                                                <div className="skeleton-box" style={{ width: '45%', height: '20px', borderRadius: '6px', marginBottom: '1.25rem' }}></div>
+                                                <div className="skeleton-box" style={{ width: '160px', height: '46px', borderRadius: '24px' }}></div>
+                                            </div>
+                                        </div>
+                                        <div className="skeleton-box" style={{ width: '100%', height: '280px', borderRadius: '16px' }}></div>
                                     </div>
                                 ) : (
-                                    <div className="play-apps-grid">
-                                        {filteredApps.map(appItem => {
-                                            const acf = appItem.acf || {};
-                                            return (
-                                                <article key={appItem.id} className="play-app-card">
-                                                    <div>
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
-                                                            <a href={`/${appItem.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', appItem.id); }}>
-                                                                <img src={formatAssetUrl(acf.app_icon)} alt={appItem.title} className="play-card-icon" loading="lazy" />
-                                                            </a>
-                                                            <span className="card-cat-tag">{appItem.category}</span>
-                                                        </div>
-
-                                                        <div className="play-card-info" style={{ marginBottom: '0.85rem' }}>
-                                                            <h3 className="play-card-name">
-                                                                <a href={`/${appItem.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', appItem.id); }}>
-                                                                    {appItem.title}
-                                                                </a>
-                                                            </h3>
-                                                            <div className="play-card-company">{acf.app_developer}</div>
-                                                            
-                                                            <div className="play-card-badges">
-                                                                <span className="rating-badge">★ {acf.app_rating}</span>
-                                                                <span className="version-badge">{acf.app_version}</span>
-                                                                <span className="size-badge">{acf.app_size}</span>
-                                                            </div>
-                                                        </div>
-
-                                                        <p className="play-card-desc">{appItem.tagline}</p>
-                                                    </div>
-
-                                                    <div className="play-card-footer">
-                                                        <span className="download-count">
-                                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                                                <polyline points="7 10 12 15 17 10"></polyline>
-                                                                <line x1="12" y1="15" x2="12" y2="3"></line>
-                                                            </svg>
-                                                            <span>{Number(acf.download_count || 100).toLocaleString()}</span> downloads
-                                                        </span>
-
-                                                        <button 
-                                                            onClick={() => navigateTo('details', appItem.id)} 
-                                                            className="btn-install-sm"
-                                                        >
-                                                            View Details
-                                                        </button>
-                                                    </div>
-                                                </article>
-                                            );
-                                        })}
+                                    <div>
+                                        <div className="skeleton-box" style={{ width: '100%', height: '180px', borderRadius: '20px', marginBottom: '2rem' }}></div>
+                                        <div className="play-apps-grid">
+                                            {[1, 2, 3, 4, 5, 6].map(n => (
+                                                <div key={n} className="skeleton-box" style={{ height: '180px', borderRadius: '16px' }}></div>
+                                            ))}
+                                        </div>
                                     </div>
                                 )}
                             </div>
-                        )}
-
-                        {/* SINGLE APP DETAILS VIEW */}
-                        {currentView === 'details' && selectedApp && (
-                            <div>
-                                {/* Breadcrumbs & Admin Actions */}
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                                        <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('home', null); }} style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>Apps</a>
-                                        <span style={{ color: 'var(--text-dim)' }}>&rsaquo;</span>
-                                        <span className="card-cat-tag">{selectedApp.category}</span>
-                                    </div>
-                                </div>
-
-                                {/* Hero Section */}
-                                <section className="play-hero">
-                                    <div className="play-hero-left">
-                                        <h1 className="play-hero-title">{selectedApp.title}</h1>
-                                        <div className="play-hero-company">{selectedApp.acf?.app_developer}</div>
-
-                                        <div className="play-stats-row">
-                                            <div className="play-stat-col">
-                                                <div className="play-stat-val">{selectedApp.acf?.app_rating} ★</div>
-                                                <div className="play-stat-sub">{selectedApp.acf?.rating_count || '2,400'} reviews</div>
+                        ) : (
+                            <>
+                                {currentView === 'home' && (
+                                    <div>
+                                        {/* Hero Banner */}
+                                        <section className="play-hero-banner">
+                                            <div className="play-hero-banner-content">
+                                                <span className="security-badge-box" style={{ marginBottom: '0.75rem' }}>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                    100% Malware Free & Play Protect Verified
+                                                </span>
+                                                <h1 className="play-hero-banner-title">Discover & Download Premium Android Apps</h1>
+                                                <p className="play-hero-banner-sub">Your trusted destination for verified, virus-free Android APKs, original app packages, and high-speed direct downloads.</p>
                                             </div>
+                                        </section>
 
-                                            <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
-                                                <div className="play-stat-val">{Number(selectedApp.acf?.download_count || 100).toLocaleString()}+</div>
-                                                <div className="play-stat-sub">Downloads</div>
-                                            </div>
-
-                                            <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
-                                                <div className="play-stat-val" style={{ fontSize: '0.95rem' }}>
-                                                    <span style={{ border: '1px solid var(--text-muted)', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>12+</span>
-                                                </div>
-                                                <div className="play-stat-sub">Rated for 12+</div>
-                                            </div>
-                                        </div>
-
-                                        <div className="play-hero-actions">
-                                            <button className="btn-install" onClick={() => startDownloadFlow(selectedApp)}>
-                                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                                Install APK ({selectedApp.acf?.app_size})
-                                            </button>
-
-                                            <button className="btn-secondary-action" onClick={() => handleShareApp(selectedApp)}>
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '0.4rem' }}><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-                                                Share App Link
-                                            </button>
-                                        </div>
-
-                                        <div className="device-compatibility" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: '1.25rem' }}>
-                                            <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0.55rem' }}>
-                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>This app is available for your device (Requires {selectedApp.acf?.min_android})</span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="play-hero-right">
-                                        <img src={formatAssetUrl(selectedApp.acf?.app_icon)} alt={selectedApp.title} className="play-hero-app-icon" />
-                                    </div>
-                                </section>
-
-                                {/* Screenshots Carousel with Navigation Arrows */}
-                                {selectedApp.acf?.screenshots && selectedApp.acf.screenshots.length > 0 && (
-                                    <section className="play-screenshots-container" style={{ position: 'relative' }}>
-                                        <button className="screenshot-arrow arrow-left" onClick={() => scrollScreenshots(-350)} aria-label="Previous screenshots">
-                                            &lsaquo;
-                                        </button>
-                                        <div className="play-screenshots-scroll" id="playScreenshotScroll">
-                                            {selectedApp.acf.screenshots.map((shot, idx) => (
-                                                <div key={idx} className="screenshot-wrapper" onClick={() => setPreviewScreenshot(shot)}>
-                                                    <img src={formatAssetUrl(shot)} alt={`Screenshot ${idx + 1}`} className="play-screenshot-item" />
-                                                    <div className="screenshot-overlay-zoom">
-                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <button className="screenshot-arrow arrow-right" onClick={() => scrollScreenshots(350)} aria-label="Next screenshots">
-                                            &rsaquo;
-                                        </button>
-                                    </section>
-                                )}
-
-                                {/* Details & Sidebar */}
-                                <div className="play-main-layout">
-                                    <div className="play-content-left">
-                                        <div className="play-section-title">
-                                            <span>About this app</span>
-                                        </div>
-                                        <p className="play-description" style={{ whiteSpace: 'pre-line' }}>{selectedApp.description}</p>
-
-                                        <div className="play-section-title">
-                                            <span>Technical Specifications & Package Info</span>
-                                        </div>
-
-                                        <div className="play-specs-grid">
-                                            <div className="spec-card">
-                                                <div className="spec-icon">📦</div>
-                                                <div>
-                                                    <div className="spec-cell-label">Version</div>
-                                                    <div className="spec-cell-val">{selectedApp.acf?.app_version}</div>
-                                                </div>
-                                            </div>
-                                            <div className="spec-card">
-                                                <div className="spec-icon">📅</div>
-                                                <div>
-                                                    <div className="spec-cell-label">Updated on</div>
-                                                    <div className="spec-cell-val">{selectedApp.acf?.release_date}</div>
-                                                </div>
-                                            </div>
-                                            <div className="spec-card">
-                                                <div className="spec-icon">⚡</div>
-                                                <div>
-                                                    <div className="spec-cell-label">Download Size</div>
-                                                    <div className="spec-cell-val">{selectedApp.acf?.app_size}</div>
-                                                </div>
-                                            </div>
-                                            <div className="spec-card">
-                                                <div className="spec-icon">📱</div>
-                                                <div>
-                                                    <div className="spec-cell-label">Requires Android</div>
-                                                    <div className="spec-cell-val">{selectedApp.acf?.min_android}</div>
-                                                </div>
+                                        {/* Category Chips Filter Bar */}
+                                        <div className="play-category-chips-wrap" style={{ marginBottom: '1.75rem', overflowX: 'auto', paddingBottom: '0.5rem', scrollbarWidth: 'none' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                                                {['all','tools','productivity'].map(cat => (
+                                                    <button
+                                                        key={cat}
+                                                        onClick={() => { setSelectedCategory(cat); navigateTo('home', null); }}
+                                                        className={`play-chip-item ${selectedCategory === cat ? 'active' : ''}`}
+                                                        style={{
+                                                            padding: '0.55rem 1.35rem',
+                                                            borderRadius: 'var(--radius-full)',
+                                                            fontSize: '0.88rem',
+                                                            fontWeight: 600,
+                                                            border: selectedCategory === cat ? 'none' : '1px solid var(--border-color)',
+                                                            background: selectedCategory === cat ? 'var(--play-green)' : 'var(--bg-surface)',
+                                                            color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-main)',
+                                                            cursor: 'pointer',
+                                                            whiteSpace: 'nowrap',
+                                                            transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                                                            boxShadow: selectedCategory === cat ? '0 4px 14px rgba(1, 135, 95, 0.3)' : 'none'
+                                                        }}
+                                                    >
+                                                        {cat === 'all' ? '✨ All Apps' : (cat.charAt(0).toUpperCase() + cat.slice(1))}
+                                                    </button>
+                                                ))}
                                             </div>
                                         </div>
 
-                                        {selectedApp.acf?.features && selectedApp.acf.features.length > 0 && (
-                                            <div style={{ marginTop: '2.5rem' }}>
-                                                <div className="play-section-title">
-                                                    <span>Key Highlights & Features</span>
-                                                </div>
-                                                <ul className="features-checklist play-features-grid">
-                                                    {selectedApp.acf.features.map((feat, idx) => (
-                                                        <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', background: 'var(--bg-surface)', padding: '0.85rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
-                                                            <div className="check-icon">✓</div>
-                                                            <span>{feat}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
+                                        {/* Section Header */}
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+                                            <div>
+                                                <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-main)' }}>
+                                                    {selectedCategory === 'all' ? 'Recommended Applications' : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Apps`}
+                                                </h2>
+                                                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Selected top rated apps & games</p>
+                                            </div>
+                                            <span style={{ color: 'var(--play-green)', fontWeight: 700, fontSize: '0.9rem' }}>
+                                                {filteredApps.length} Apps Available
+                                            </span>
+                                        </div>
+
+                                        {/* Apps Grid */}
+                                        {filteredApps.length === 0 ? (
+                                            <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', marginBottom: '3rem' }}>
+                                                <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.5rem', marginBottom: '0.5rem' }}>No Apps Found</h3>
+                                                <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>Try searching for another keyword or upload a new app via Admin Portal.</p>
+                                                <button onClick={() => { setSelectedCategory('all'); setSearchQuery(''); navigateTo('home', null); }} className="btn-primary">View All Apps</button>
+                                            </div>
+                                        ) : (
+                                            <div className="play-apps-grid">
+                                                {filteredApps.map(appItem => {
+                                                    const acf = appItem.acf || {};
+                                                    return (
+                                                        <article key={appItem.id} className="play-app-card">
+                                                            <div>
+                                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.85rem' }}>
+                                                                    <a href={`/${appItem.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', appItem.id); }}>
+                                                                        <img src={formatAssetUrl(acf.app_icon)} alt={appItem.title} className="play-card-icon" loading="lazy" />
+                                                                    </a>
+                                                                    <span className="card-cat-tag">{appItem.category}</span>
+                                                                </div>
+
+                                                                <div className="play-card-info" style={{ marginBottom: '0.85rem' }}>
+                                                                    <h3 className="play-card-name">
+                                                                        <a href={`/${appItem.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', appItem.id); }}>
+                                                                            {appItem.title}
+                                                                        </a>
+                                                                    </h3>
+                                                                    <div className="play-card-company">{acf.app_developer}</div>
+                                                                    
+                                                                    <div className="play-card-badges">
+                                                                        <span className="rating-badge">★ {acf.app_rating}</span>
+                                                                        <span className="version-badge">{acf.app_version}</span>
+                                                                        <span className="size-badge">{acf.app_size}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <p className="play-card-desc">{appItem.tagline}</p>
+                                                            </div>
+
+                                                            <div className="play-card-footer">
+                                                                <span className="download-count">
+                                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                                                    </svg>
+                                                                    <span>{Number(acf.download_count || 100).toLocaleString()}</span> downloads
+                                                                </span>
+
+                                                                <button 
+                                                                    onClick={() => navigateTo('details', appItem.id)} 
+                                                                    className="btn-install-sm"
+                                                                >
+                                                                    View Details
+                                                                </button>
+                                                            </div>
+                                                        </article>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                     </div>
+                                )}
 
-                                    {/* Sidebar */}
-                                    <div className="play-sidebar">
-                                        <div className="sidebar-card">
-                                            <div className="sidebar-title">
-                                                <span>App support</span>
-                                            </div>
-                                            <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'grid', gap: '0.75rem' }}>
-                                                <div>📧 <strong>Support Email:</strong> support@{selectedApp.id}.com</div>
-                                                <div>🌐 <strong>Developer:</strong> {selectedApp.acf?.app_developer}</div>
-                                                <div>🔒 <strong>Privacy Policy:</strong> <span style={{ color: 'var(--play-green)', fontWeight: 600 }}>Verified Clean</span></div>
+                                {/* SINGLE APP DETAILS VIEW */}
+                                {currentView === 'details' && selectedApp && (
+                                    <div>
+                                        {/* Breadcrumbs & Admin Actions */}
+                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                                                <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('home', null); }} style={{ color: 'var(--text-muted)', fontSize: '0.9rem', fontWeight: 500 }}>Apps</a>
+                                                <span style={{ color: 'var(--text-dim)' }}>&rsaquo;</span>
+                                                <span className="card-cat-tag">{selectedApp.category}</span>
                                             </div>
                                         </div>
 
-                                        <div className="sidebar-card">
-                                            <div className="sidebar-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <span>Similar apps</span>
-                                                <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('home', null); }} style={{ color: 'var(--play-green)', fontSize: '0.85rem' }}>View All</a>
-                                            </div>
-                                            {apps.filter(a => a.id !== selectedApp.id).slice(0, 3).map(other => (
-                                                <a key={other.id} href={`/${other.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', other.id); }} className="similar-app-item">
-                                                    <img src={formatAssetUrl(other.acf?.app_icon)} className="similar-app-icon" />
-                                                    <div className="similar-app-meta">
-                                                        <div className="similar-app-name">{other.title}</div>
-                                                        <div className="similar-app-company">{other.acf?.app_developer}</div>
-                                                        <div className="similar-app-rating">★ {other.acf?.app_rating}</div>
+                                        {/* Hero Section */}
+                                        <section className="play-hero">
+                                            <div className="play-hero-left">
+                                                <h1 className="play-hero-title">{selectedApp.title}</h1>
+                                                <div className="play-hero-company">{selectedApp.acf?.app_developer}</div>
+
+                                                <div className="play-stats-row">
+                                                    <div className="play-stat-col">
+                                                        <div className="play-stat-val">{selectedApp.acf?.app_rating} ★</div>
+                                                        <div className="play-stat-sub">{selectedApp.acf?.rating_count || '2,400'} reviews</div>
                                                     </div>
-                                                </a>
-                                            ))}
+
+                                                    <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
+                                                        <div className="play-stat-val">{Number(selectedApp.acf?.download_count || 100).toLocaleString()}+</div>
+                                                        <div className="play-stat-sub">Downloads</div>
+                                                    </div>
+
+                                                    <div className="play-stat-col" style={{ borderLeft: '1px solid var(--border-color)', paddingLeft: '2rem' }}>
+                                                        <div className="play-stat-val" style={{ fontSize: '0.95rem' }}>
+                                                            <span style={{ border: '1px solid var(--text-muted)', padding: '0.15rem 0.5rem', borderRadius: '4px', fontSize: '0.75rem', fontWeight: 700 }}>12+</span>
+                                                        </div>
+                                                        <div className="play-stat-sub">Rated for 12+</div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="play-hero-actions">
+                                                    <button className="btn-install" onClick={() => startDownloadFlow(selectedApp)}>
+                                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                                        Install APK ({selectedApp.acf?.app_size})
+                                                    </button>
+
+                                                    <button className="btn-secondary-action" onClick={() => handleShareApp(selectedApp)}>
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '0.4rem' }}><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                                        Share App Link
+                                                    </button>
+                                                </div>
+
+                                                <div className="device-compatibility" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', marginTop: '1.25rem' }}>
+                                                    <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0.55rem' }}>
+                                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#01875F" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                        <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>This app is available for your device (Requires {selectedApp.acf?.min_android})</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="play-hero-right">
+                                                <img src={formatAssetUrl(selectedApp.acf?.app_icon)} alt={selectedApp.title} className="play-hero-app-icon" />
+                                            </div>
+                                        </section>
+
+                                        {/* Screenshots Carousel with Navigation Arrows */}
+                                        {selectedApp.acf?.screenshots && selectedApp.acf.screenshots.length > 0 && (
+                                            <section className="play-screenshots-container" style={{ position: 'relative' }}>
+                                                <button className="screenshot-arrow arrow-left" onClick={() => scrollScreenshots(-350)} aria-label="Previous screenshots">
+                                                    &lsaquo;
+                                                </button>
+                                                <div className="play-screenshots-scroll" id="playScreenshotScroll">
+                                                    {selectedApp.acf.screenshots.map((shot, idx) => (
+                                                        <div key={idx} className="screenshot-wrapper" onClick={() => setPreviewScreenshot(shot)}>
+                                                            <img src={formatAssetUrl(shot)} alt={`Screenshot ${idx + 1}`} className="play-screenshot-item" />
+                                                            <div className="screenshot-overlay-zoom">
+                                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" strokeWidth="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                                <button className="screenshot-arrow arrow-right" onClick={() => scrollScreenshots(350)} aria-label="Next screenshots">
+                                                    &rsaquo;
+                                                </button>
+                                            </section>
+                                        )}
+
+                                        {/* Details & Sidebar */}
+                                        <div className="play-main-layout">
+                                            <div className="play-content-left">
+                                                <div className="play-section-title">
+                                                    <span>About this app</span>
+                                                </div>
+                                                <p className="play-description" style={{ whiteSpace: 'pre-line' }}>{selectedApp.description}</p>
+
+                                                <div className="play-section-title">
+                                                    <span>Technical Specifications & Package Info</span>
+                                                </div>
+
+                                                <div className="play-specs-grid">
+                                                    <div className="spec-card">
+                                                        <div className="spec-icon">📦</div>
+                                                        <div>
+                                                            <div className="spec-cell-label">Version</div>
+                                                            <div className="spec-cell-val">{selectedApp.acf?.app_version}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="spec-card">
+                                                        <div className="spec-icon">📅</div>
+                                                        <div>
+                                                            <div className="spec-cell-label">Updated on</div>
+                                                            <div className="spec-cell-val">{selectedApp.acf?.release_date}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="spec-card">
+                                                        <div className="spec-icon">⚡</div>
+                                                        <div>
+                                                            <div className="spec-cell-label">Download Size</div>
+                                                            <div className="spec-cell-val">{selectedApp.acf?.app_size}</div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="spec-card">
+                                                        <div className="spec-icon">📱</div>
+                                                        <div>
+                                                            <div className="spec-cell-label">Requires Android</div>
+                                                            <div className="spec-cell-val">{selectedApp.acf?.min_android}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {selectedApp.acf?.features && selectedApp.acf.features.length > 0 && (
+                                                    <div style={{ marginTop: '2.5rem' }}>
+                                                        <div className="play-section-title">
+                                                            <span>Key Highlights & Features</span>
+                                                        </div>
+                                                        <ul className="features-checklist play-features-grid">
+                                                            {selectedApp.acf.features.map((feat, idx) => (
+                                                                <li key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', background: 'var(--bg-surface)', padding: '0.85rem 1.25rem', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-color)' }}>
+                                                                    <div className="check-icon">✓</div>
+                                                                    <span>{feat}</span>
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                )}
+                                            </div>
+
+                                            {/* Sidebar */}
+                                            <div className="play-sidebar">
+                                                <div className="sidebar-card">
+                                                    <div className="sidebar-title">
+                                                        <span>App support</span>
+                                                    </div>
+                                                    <div style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'grid', gap: '0.75rem' }}>
+                                                        <div>📧 <strong>Support Email:</strong> support@{selectedApp.id}.com</div>
+                                                        <div>🌐 <strong>Developer:</strong> {selectedApp.acf?.app_developer}</div>
+                                                        <div>🔒 <strong>Privacy Policy:</strong> <span style={{ color: 'var(--play-green)', fontWeight: 600 }}>Verified Clean</span></div>
+                                                    </div>
+                                                </div>
+
+                                                <div className="sidebar-card">
+                                                    <div className="sidebar-title" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                        <span>Similar apps</span>
+                                                        <a href="/" onClick={(e) => { e.preventDefault(); navigateTo('home', null); }} style={{ color: 'var(--play-green)', fontSize: '0.85rem' }}>View All</a>
+                                                    </div>
+                                                    {apps.filter(a => a.id !== selectedApp.id).slice(0, 3).map(other => (
+                                                        <a key={other.id} href={`/${other.id}`} onClick={(e) => { e.preventDefault(); navigateTo('details', other.id); }} className="similar-app-item">
+                                                            <img src={formatAssetUrl(other.acf?.app_icon)} className="similar-app-icon" />
+                                                            <div className="similar-app-meta">
+                                                                <div className="similar-app-name">{other.title}</div>
+                                                                <div className="similar-app-company">{other.acf?.app_developer}</div>
+                                                                <div className="similar-app-rating">★ {other.acf?.app_rating}</div>
+                                                            </div>
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                )}
+
+                                {/* INVALID APP / APP NOT FOUND VIEW */}
+                                {currentView === 'details' && !selectedApp && (
+                                    <div style={{ padding: '4rem 2rem', textAlign: 'center', background: 'var(--bg-surface)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', margin: '2rem 0' }}>
+                                        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '1.6rem', marginBottom: '0.5rem', color: 'var(--text-main)' }}>App Not Found</h2>
+                                        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>The requested application could not be found or may have been removed.</p>
+                                        <button onClick={() => navigateTo('home', null)} className="btn-primary" style={{ display: 'inline-flex', margin: '0 auto' }}>
+                                            Browse All Apps
+                                        </button>
+                                    </div>
+                                )}
+                            </>
                         )}
+                    </main>     )}
                     </main>
 
                     {/* FOOTER */}
