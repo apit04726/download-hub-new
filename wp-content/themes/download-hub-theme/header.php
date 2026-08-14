@@ -70,15 +70,6 @@ if ($current_cat === 'all') {
             </div>
         </a>
 
-        <!-- Category Nav Links with Dynamic Active State & Pretty Permalinks -->
-        <nav class="play-nav-links">
-            <a href="category/all" class="play-nav-item <?php echo ($current_cat === 'all') ? 'active' : ''; ?>" style="text-decoration: none;">Apps</a>
-            <a href="category/games" class="play-nav-item <?php echo ($current_cat === 'games') ? 'active' : ''; ?>" style="text-decoration: none;">Games</a>
-            <a href="category/tools" class="play-nav-item <?php echo ($current_cat === 'tools') ? 'active' : ''; ?>" style="text-decoration: none;">Tools</a>
-            <a href="category/photography" class="play-nav-item <?php echo ($current_cat === 'photography') ? 'active' : ''; ?>" style="text-decoration: none;">Photography</a>
-            <a href="category/health" class="play-nav-item <?php echo ($current_cat === 'health') ? 'active' : ''; ?>" style="text-decoration: none;">Health</a>
-        </nav>
-
         <!-- Search Bar with Kbd shortcut badge -->
         <div class="search-bar-wrap">
             <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

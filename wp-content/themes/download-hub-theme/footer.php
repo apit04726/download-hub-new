@@ -228,7 +228,53 @@ function triggerDirectDownload() {
     // Trigger actual download link
     window.location.href = 'download.php?app=' + currentAppId;
 }
+
+// Scroll to Top Helper Function
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Scroll Listener for Floating FAB Button
+window.addEventListener('scroll', function() {
+    const fab = document.getElementById('scrollTopBtn');
+    if (fab) {
+        if (window.scrollY > 250) {
+            fab.classList.add('visible');
+        } else {
+            fab.classList.remove('visible');
+        }
+    }
+}, { passive: true });
 </script>
+
+<!-- Floating Scroll-to-Top Action Button (FAB) -->
+<button id="scrollTopBtn" class="scroll-top-fab" onclick="scrollToTop()" aria-label="Scroll to top" title="Back to Top">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+    </svg>
+</button>
+
+<!-- Play Store Native Mobile Bottom Navigation Bar -->
+<nav class="play-mobile-bottom-bar" aria-label="Mobile Navigation">
+    <a href="category/all" class="mobile-nav-item <?php echo (($current_cat ?? 'all') === 'all') ? 'active' : ''; ?>" onclick="scrollToTop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+        <span>Apps</span>
+    </a>
+    <a href="category/games" class="mobile-nav-item <?php echo (($current_cat ?? '') === 'games') ? 'active' : ''; ?>" onclick="scrollToTop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="6 11 10 7 14 11 18 7 18 17 6 17 6 11"></polygon><line x1="10" y1="11" x2="10" y2="14"></line><line x1="14" y1="11" x2="14" y2="14"></line></svg>
+        <span>Games</span>
+    </a>
+    <button class="mobile-nav-item" onclick="scrollToTop(); setTimeout(() => { const el = document.getElementById('liveSearchInput'); if (el) el.focus(); }, 100);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Search</span>
+    </button>
+    <button class="mobile-nav-item" onclick="scrollToTop()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+        <span>Top</span>
+    </button>
+</nav>
 
 </body>
 </html>
+

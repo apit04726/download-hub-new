@@ -21,6 +21,30 @@ $apps = filter_apps($cat_filter);
         </div>
     </section>
 
+    <!-- Category Chips Filter Bar -->
+    <div class="play-category-chips-wrap" style="margin-bottom: 1.75rem; overflow-x: auto; padding-bottom: 0.5rem; scrollbar-width: none;">
+        <div style="display: flex; align-items: center; gap: 0.65rem;">
+            <?php 
+            $cats = [
+                'all' => '✨ All Apps',
+                'games' => 'Games',
+                'tools' => 'Tools',
+                'photography' => 'Photography',
+                'health' => 'Health',
+                'productivity' => 'Productivity'
+            ];
+            foreach ($cats as $cat_slug => $cat_name) :
+                $is_cat_active = ($cat_filter === $cat_slug);
+            ?>
+                <a href="<?php echo ($cat_slug === 'all') ? 'index.php' : ('category/' . $cat_slug); ?>" 
+                   class="play-chip-item <?php echo $is_cat_active ? 'active' : ''; ?>"
+                   style="padding: 0.55rem 1.35rem; border-radius: var(--radius-full); font-size: 0.88rem; font-weight: 600; border: <?php echo $is_cat_active ? 'none' : '1px solid var(--border-color)'; ?>; background: <?php echo $is_cat_active ? 'var(--play-green)' : 'var(--bg-surface)'; ?>; color: <?php echo $is_cat_active ? '#FFFFFF' : 'var(--text-main)'; ?>; text-decoration: none; white-space: nowrap; transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: <?php echo $is_cat_active ? '0 4px 14px rgba(1, 135, 95, 0.3)' : 'none'; ?>;">
+                    <?php echo esc_html($cat_name); ?>
+                </a>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
     <!-- Section Header -->
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
         <div>

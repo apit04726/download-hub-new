@@ -127,6 +127,28 @@
             const [selectedCategory, setSelectedCategory] = React.useState('all');
             const [searchQuery, setSearchQuery] = React.useState('');
 
+            // Scroll-To-Top & Mobile Navigation State
+            const [showScrollTop, setShowScrollTop] = React.useState(false);
+
+            // Handle Scroll Position for Floating FAB
+            React.useEffect(() => {
+                const handleScroll = () => {
+                    setShowScrollTop(window.scrollY > 250);
+                };
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Auto Scroll to Top on View / Category / App Selection Change
+            React.useEffect(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, [currentView, selectedAppId, selectedCategory]);
+
+            // Smooth Scroll to Top Helper
+            const scrollToTop = () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+
             // APK Download Modal State
             const [downloadModalApp, setDownloadModalApp] = React.useState(null);
             const [downloadTimer, setDownloadTimer] = React.useState(5);
@@ -226,21 +248,6 @@
                                 </div>
                             </a>
 
-                            {/* Category Nav Links */}
-                            <nav className="play-nav-links">
-                                {['all', 'games', 'tools', 'photography', 'health', 'productivity'].map(cat => (
-                                    <a 
-                                        key={cat} 
-                                        href="#" 
-                                        onClick={(e) => { e.preventDefault(); setSelectedCategory(cat); setCurrentView('home'); }}
-                                        className={`play-nav-item ${selectedCategory === cat ? 'active' : ''}`}
-                                        style={{ textDecoration: 'none', textTransform: 'capitalize' }}
-                                    >
-                                        {cat === 'all' ? 'Apps' : cat}
-                                    </a>
-                                ))}
-                            </nav>
-
                             {/* Search Input */}
                             <div className="search-bar-wrap">
                                 <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -256,8 +263,6 @@
                                 />
                                 <span className="search-kbd">⌘K</span>
                             </div>
-
-
                         </div>
                     </header>
 
@@ -276,6 +281,34 @@
                                         <p className="play-hero-banner-sub">Your trusted destination for verified, virus-free Android APKs, original app packages, and high-speed direct downloads.</p>
                                     </div>
                                 </section>
+
+                                {/* Category Chips Filter Bar */}
+                                <div className="play-category-chips-wrap" style={{ marginBottom: '1.75rem', overflowX: 'auto', paddingBottom: '0.5rem', scrollbarWidth: 'none' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                                        {['all', 'games', 'tools', 'photography', 'health', 'productivity'].map(cat => (
+                                            <button
+                                                key={cat}
+                                                onClick={() => { setSelectedCategory(cat); setCurrentView('home'); }}
+                                                className={`play-chip-item ${selectedCategory === cat ? 'active' : ''}`}
+                                                style={{
+                                                    padding: '0.55rem 1.35rem',
+                                                    borderRadius: 'var(--radius-full)',
+                                                    fontSize: '0.88rem',
+                                                    fontWeight: 600,
+                                                    border: selectedCategory === cat ? 'none' : '1px solid var(--border-color)',
+                                                    background: selectedCategory === cat ? 'var(--play-green)' : 'var(--bg-surface)',
+                                                    color: selectedCategory === cat ? '#FFFFFF' : 'var(--text-main)',
+                                                    cursor: 'pointer',
+                                                    whiteSpace: 'nowrap',
+                                                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                                                    boxShadow: selectedCategory === cat ? '0 4px 14px rgba(1, 135, 95, 0.3)' : 'none'
+                                                }}
+                                            >
+                                                {cat === 'all' ? '✨ All Apps' : (cat.charAt(0).toUpperCase() + cat.slice(1))}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
 
                                 {/* Section Header */}
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
@@ -612,7 +645,6 @@
                                     <span className="lang-selector" style={{ cursor: 'pointer' }}>🌐 English (US)</span>
                                     <span style={{ cursor: 'pointer' }}>Privacy Policy</span>
                                     <span style={{ cursor: 'pointer' }}>Terms of Service</span>
-                                    <span style={{ cursor: 'pointer' }}>Security</span>
                                 </div>
                             </div>
                         </div>
@@ -666,6 +698,56 @@
                             </div>
                         </div>
                     )}
+                    {/* Floating Scroll-to-Top Action Button (FAB) */}
+                    <button 
+                        className={`scroll-top-fab ${showScrollTop ? 'visible' : ''}`}
+                        onClick={scrollToTop}
+                        aria-label="Scroll to top"
+                        title="Back to Top"
+                    >
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                            <polyline points="5 12 12 5 19 12"></polyline>
+                        </svg>
+                    </button>
+
+                    {/* Google Play Store Native Mobile Bottom Navigation Bar */}
+                    <nav className="play-mobile-bottom-bar" aria-label="Mobile Navigation">
+                        <button 
+                            className={`mobile-nav-item ${currentView === 'home' && selectedCategory === 'all' ? 'active' : ''}`}
+                            onClick={() => { setSelectedCategory('all'); setCurrentView('home'); scrollToTop(); }}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect></svg>
+                            <span>Apps</span>
+                        </button>
+                        <button 
+                            className={`mobile-nav-item ${currentView === 'home' && selectedCategory === 'games' ? 'active' : ''}`}
+                            onClick={() => { setSelectedCategory('games'); setCurrentView('home'); scrollToTop(); }}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="6 11 10 7 14 11 18 7 18 17 6 17 6 11"></polygon><line x1="10" y1="11" x2="10" y2="14"></line><line x1="14" y1="11" x2="14" y2="14"></line></svg>
+                            <span>Games</span>
+                        </button>
+                        <button 
+                            className="mobile-nav-item"
+                            onClick={() => {
+                                scrollToTop();
+                                setTimeout(() => {
+                                    const el = document.querySelector('.search-input');
+                                    if (el) el.focus();
+                                }, 100);
+                            }}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <span>Search</span>
+                        </button>
+                        <button 
+                            className="mobile-nav-item"
+                            onClick={scrollToTop}
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                            <span>Top</span>
+                        </button>
+                    </nav>
                 </div>
             );
         }

@@ -56,6 +56,10 @@ Version: 3.5.0
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background-color: var(--bg-main);
     color: var(--text-main);
@@ -1170,34 +1174,24 @@ svg {
 /* Medium Mobile & Small Tablets (481px to 768px) */
 @media (max-width: 768px) {
     .site-header {
-        padding: 0.6rem 1rem;
+        padding: 0.65rem 1rem;
     }
     .nav-container {
-        flex-wrap: wrap;
-        gap: 0.75rem;
+        flex-wrap: nowrap;
+        gap: 0.85rem;
+        align-items: center;
     }
     .brand-logo {
         font-size: 1.15rem;
-    }
-    .play-nav-links {
-        order: 3;
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 0.35rem;
-        gap: 1.25rem;
-        scrollbar-width: none;
-    }
-    .play-nav-links::-webkit-scrollbar {
-        display: none;
+        flex-shrink: 0;
     }
     .search-bar-wrap {
-        order: 2;
-        max-width: none;
         flex: 1;
+        max-width: none;
     }
     .search-input {
-        font-size: 0.88rem;
-        padding: 0.5rem 1rem 0.5rem 2.4rem;
+        font-size: 0.85rem;
+        padding: 0.48rem 0.85rem 0.48rem 2.2rem;
     }
     .search-kbd {
         display: none;
@@ -1250,11 +1244,15 @@ svg {
         grid-template-columns: 1fr;
     }
     .site-footer {
-        padding: 2.5rem 1.25rem 1.5rem 1.25rem;
+        padding: 2.5rem 1.25rem 2rem 1.25rem;
     }
     .footer-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 2rem;
+        gap: 2rem 2rem;
+        max-width: 540px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
     }
     .brand-col {
         grid-column: span 2;
@@ -1262,9 +1260,44 @@ svg {
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px dashed var(--border-color);
+        width: 100%;
     }
     .brand-col .brand-logo {
         justify-content: center;
+    }
+    .footer-col:not(.brand-col) {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .footer-col-title {
+        text-align: center;
+        display: inline-block;
+    }
+    .footer-col-title::after {
+        margin: 0.35rem auto 0 auto;
+    }
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 0.65rem;
+        width: 100%;
+        padding: 0;
+    }
+    .footer-links li {
+        text-align: center;
+        width: 100%;
+    }
+    .footer-links a {
+        display: inline-block;
+        text-align: center;
     }
     .footer-bottom-bar {
         flex-direction: column;
@@ -1272,9 +1305,11 @@ svg {
         gap: 1rem;
     }
     .footer-bottom-links {
+        display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        gap: 1rem;
+        gap: 0.85rem 1.5rem;
+        padding: 0 3rem 0 1rem;
     }
 }
 
@@ -1416,25 +1451,61 @@ svg {
         margin-bottom: 0;
     }
     .site-footer {
-        padding: 2rem 0.85rem 1.25rem 0.85rem;
+        padding: 2rem 1rem 2rem 1rem;
         margin-top: 0;
     }
     .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
-        text-align: center;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 1.75rem 1.25rem !important;
+        max-width: 520px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: center !important;
     }
     .brand-col {
-        grid-column: auto;
+        grid-column: span 2 !important;
         display: flex;
         flex-direction: column;
         align-items: center;
+        text-align: center;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px dashed var(--border-color);
+        width: 100%;
     }
     .brand-col .brand-logo {
         justify-content: center;
     }
+    .footer-col:not(.brand-col) {
+        text-align: center !important;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .footer-col-title {
+        text-align: center !important;
+        display: inline-block;
+    }
+    .footer-col-title::after {
+        margin: 0.35rem auto 0 auto !important;
+    }
     .footer-links {
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 0.65rem;
+        width: 100%;
+        padding: 0;
+    }
+    .footer-links li {
+        text-align: center !important;
+        width: 100%;
+    }
+    .footer-links a {
+        display: inline-block;
+        text-align: center;
     }
     .security-badge-box {
         margin: 0 auto;
@@ -1446,9 +1517,12 @@ svg {
         padding-top: 1.5rem;
     }
     .footer-bottom-links {
+        display: flex;
         justify-content: center;
-        gap: 0.85rem;
-        font-size: 0.8rem;
+        flex-wrap: wrap;
+        gap: 0.75rem 1.25rem;
+        font-size: 0.82rem;
+        padding: 0 2.5rem 0 0.5rem;
     }
     .admin-submit-btn {
         font-size: 0.88rem !important;
@@ -1485,3 +1559,174 @@ svg {
     border-color: #F87171 !important;
     color: #B91C1C !important;
 }
+
+/* ==========================================================================
+   Smart Scroll-To-Top FAB & Play Store Mobile Bottom Navigation Bar
+   ========================================================================== */
+
+/* Floating Scroll-To-Top Action Button */
+.scroll-top-fab {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #01875F 0%, #34A853 100%);
+    color: #FFFFFF;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 9990;
+    box-shadow: 0 6px 20px rgba(1, 135, 95, 0.45), 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.8);
+}
+
+.scroll-top-fab.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-top-fab:hover {
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 10px 25px rgba(1, 135, 95, 0.55), 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-top-fab:active {
+    transform: translateY(0) scale(0.92);
+}
+
+.scroll-top-fab svg {
+    width: 22px !important;
+    height: 22px !important;
+    stroke-width: 2.5;
+    transition: transform 0.2s ease;
+}
+
+.scroll-top-fab:hover svg {
+    transform: translateY(-2px);
+}
+
+/* Touch Device Ripple Glow */
+.scroll-top-fab::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(1, 135, 95, 0.4);
+    opacity: 0;
+    animation: fabPulse 2s infinite;
+}
+
+@keyframes fabPulse {
+    0% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.25); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+}
+
+/* Play Store Native Mobile Bottom Navigation Bar */
+.play-mobile-bottom-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding-bottom: 72px !important;
+    }
+
+    .scroll-top-fab {
+        bottom: 84px;
+        right: 18px;
+        width: 44px;
+        height: 44px;
+    }
+
+    .scroll-top-fab svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+
+    .play-mobile-bottom-bar {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 66px;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-top: 1px solid var(--border-color);
+        z-index: 9980;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 0.5rem;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05);
+        transition: background 0.3s ease, border-color 0.3s ease;
+    }
+
+    [data-theme="dark"] .play-mobile-bottom-bar {
+        background: rgba(32, 33, 36, 0.94);
+        border-top-color: #3C4043;
+        box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        padding: 6px 14px;
+        border-radius: var(--radius-full);
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        font-family: inherit;
+        text-decoration: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .mobile-nav-item.active {
+        color: var(--play-green);
+        background: var(--play-green-light);
+    }
+
+    .mobile-nav-item svg {
+        width: 20px !important;
+        height: 20px !important;
+        stroke-width: 2.2;
+    }
+
+    .mobile-nav-item:active {
+        transform: scale(0.92);
+    }
+
+    /* Mobile Screenshot Gallery Snap Scroll */
+    .play-screenshots-scroll {
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    .screenshot-wrapper {
+        scroll-snap-align: start;
+        flex-shrink: 0;
+    }
+}
+
