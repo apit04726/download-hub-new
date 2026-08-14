@@ -115,7 +115,7 @@ $apps = filter_apps($cat_filter);
                             <span id="count-<?php echo $app['id']; ?>"><?php echo number_format($download_count); ?></span> downloads
                         </span>
 
-                        <a href="<?php echo $app_url; ?>" class="btn-install-sm" style="text-decoration: none; padding: 0.5rem 1.25rem;">
+                        <a href="<?php echo $app_url; ?>" class="btn-install-sm" style="text-decoration: none;">
                             View App Details
                         </a>
                     </div>
