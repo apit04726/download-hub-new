@@ -29,6 +29,19 @@ if ($current_cat === 'all') {
     <link rel="apple-touch-icon" href="favicon.svg">
     <title><?php echo esc_html(SITE_NAME . ' | ' . SITE_TAGLINE); ?></title>
     
+    <!-- Open Graph / WhatsApp / Facebook Preview Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="<?php echo esc_attr(SITE_NAME); ?>">
+    <meta property="og:title" content="<?php echo esc_attr(SITE_NAME . ' | ' . SITE_TAGLINE); ?>">
+    <meta property="og:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
+    <meta property="og:image" content="<?php echo esc_url(SITE_URL . '/favicon.svg'); ?>">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?php echo esc_attr(SITE_NAME . ' | ' . SITE_TAGLINE); ?>">
+    <meta name="twitter:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
+    <meta name="twitter:image" content="<?php echo esc_url(SITE_URL . '/favicon.svg'); ?>">
+    
     <!-- Relative & Absolute Fallback Stylesheet Links -->
     <link rel="stylesheet" href="wp-content/themes/download-hub-theme/style.css">
     <link rel="stylesheet" href="<?php echo SITE_URL; ?>/wp-content/themes/download-hub-theme/style.css">

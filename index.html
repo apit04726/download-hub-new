@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DownloadHub | Premium Android Apps & Games Portal</title>
+    <meta name="description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Open Graph / WhatsApp / Facebook Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DownloadHub">
+    <meta property="og:title" content="DownloadHub | Premium Android Apps & Games Portal">
+    <meta property="og:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
+    <meta property="og:image" content="favicon.svg">
+    <meta property="og:url" content="https://downloadhub.com/">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DownloadHub | Premium Android Apps & Games Portal">
+    <meta name="twitter:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
+    <meta name="twitter:image" content="favicon.svg">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -229,6 +244,52 @@
 
             const selectedApp = apps.find(a => a.id === selectedAppId);
 
+            // Dynamic Social Media Preview Meta Tags (Open Graph & Twitter Cards)
+            React.useEffect(() => {
+                const setMeta = (propName, content) => {
+                    let el = document.querySelector(`meta[property="${propName}"]`) || document.querySelector(`meta[name="${propName}"]`);
+                    if (el) {
+                        el.setAttribute('content', content);
+                    }
+                };
+
+                if (currentView === 'details' && selectedApp) {
+                    const appTitle = `${selectedApp.title} APK Download (v${selectedApp.acf?.app_version || '1.0'})`;
+                    const appDesc = selectedApp.tagline || selectedApp.description?.slice(0, 140) || `Download ${selectedApp.title} APK package safely on DownloadHub.`;
+                    const appIcon = selectedApp.acf?.app_icon || 'favicon.svg';
+
+                    document.title = `${selectedApp.title} APK Download | DownloadHub`;
+                    setMeta('og:title', appTitle);
+                    setMeta('og:description', appDesc);
+                    setMeta('og:image', appIcon);
+                    setMeta('twitter:title', appTitle);
+                    setMeta('twitter:description', appDesc);
+                    setMeta('twitter:image', appIcon);
+                } else {
+                    document.title = 'DownloadHub | Premium Android Apps & Games Portal';
+                    setMeta('og:title', 'DownloadHub | Premium Android Apps & Games Portal');
+                    setMeta('og:description', 'Discover, explore, and safely download verified Android apps & games with Play Protect security.');
+                    setMeta('og:image', 'favicon.svg');
+                }
+            }, [currentView, selectedApp]);
+
+            // Smart Share Handler (Web Share API for WhatsApp, Telegram, FB, Twitter + Clipboard Fallback)
+            const handleShareApp = (appItem) => {
+                if (!appItem) return;
+                const shareData = {
+                    title: `${appItem.title} APK Download`,
+                    text: `Check out ${appItem.title} (v${appItem.acf?.app_version || '1.0'}) APK on DownloadHub! ${appItem.tagline || ''}`,
+                    url: window.location.href
+                };
+
+                if (navigator.share) {
+                    navigator.share(shareData).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert(`📲 Link copied for ${appItem.title}!\n\nWhen you paste and share this link on WhatsApp, Telegram, or Facebook, the app icon & description will appear automatically in the link preview!`);
+                }
+            };
+
             return (
                 <div>
                     {/* Header Navbar */}
@@ -433,8 +494,9 @@
                                                 Install APK ({selectedApp.acf?.app_size})
                                             </button>
 
-                                            <button className="btn-secondary-action" onClick={() => { navigator.clipboard.writeText(window.location.href); alert('App Link copied to clipboard!'); }}>
-                                                Share
+                                            <button className="btn-secondary-action" onClick={() => handleShareApp(selectedApp)}>
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ marginRight: '0.4rem' }}><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                                Share App Link
                                             </button>
                                         </div>
 

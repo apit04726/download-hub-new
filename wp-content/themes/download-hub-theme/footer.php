@@ -227,6 +227,19 @@ function triggerDirectDownload() {
 
     // Trigger actual download link
     window.location.href = 'download.php?app=' + currentAppId;
+// Smart Share App Link (Web Share API for WhatsApp, Telegram, FB, Twitter + Clipboard Fallback)
+function shareAppLink(title, tagline) {
+    const shareData = {
+        title: title + ' APK Download',
+        text: 'Download ' + title + ' APK on DownloadHub! ' + (tagline || ''),
+        url: window.location.href
+    };
+    if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(window.location.href);
+        alert('📲 Link copied for ' + title + '!\n\nWhen you paste and share this link on WhatsApp, Telegram, or Facebook, the app icon & description will appear automatically in the link preview!');
+    }
 }
 
 // Scroll to Top Helper Function
