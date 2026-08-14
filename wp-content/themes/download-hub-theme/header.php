@@ -34,13 +34,16 @@ if ($current_cat === 'all') {
     <meta property="og:site_name" content="<?php echo esc_attr(SITE_NAME); ?>">
     <meta property="og:title" content="<?php echo esc_attr(SITE_NAME . ' | ' . SITE_TAGLINE); ?>">
     <meta property="og:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
-    <meta property="og:image" content="<?php echo esc_url(SITE_URL . '/favicon.svg'); ?>">
+    <meta property="og:image" content="<?php echo esc_url(SITE_URL . '/og-image.png'); ?>">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo esc_attr(SITE_NAME . ' | ' . SITE_TAGLINE); ?>">
     <meta name="twitter:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
-    <meta name="twitter:image" content="<?php echo esc_url(SITE_URL . '/favicon.svg'); ?>">
+    <meta name="twitter:image" content="<?php echo esc_url(SITE_URL . '/og-banner.png'); ?>">
     
     <!-- Relative & Absolute Fallback Stylesheet Links -->
     <link rel="stylesheet" href="wp-content/themes/download-hub-theme/style.css">

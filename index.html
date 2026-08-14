@@ -12,14 +12,17 @@
     <meta property="og:site_name" content="DownloadHub">
     <meta property="og:title" content="DownloadHub | Premium Android Apps & Games Portal">
     <meta property="og:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
-    <meta property="og:image" content="favicon.svg">
-    <meta property="og:url" content="https://downloadhub.com/">
+    <meta property="og:image" content="https://download-hub-new.vercel.app/og-image.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:url" content="https://download-hub-new.vercel.app/">
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DownloadHub | Premium Android Apps & Games Portal">
     <meta name="twitter:description" content="Discover, explore, and safely download verified Android apps & games with Play Protect security and high-speed APK packages.">
-    <meta name="twitter:image" content="favicon.svg">
+    <meta name="twitter:image" content="https://download-hub-new.vercel.app/og-banner.png">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -256,7 +259,7 @@
                 if (currentView === 'details' && selectedApp) {
                     const appTitle = `${selectedApp.title} APK Download (v${selectedApp.acf?.app_version || '1.0'})`;
                     const appDesc = selectedApp.tagline || selectedApp.description?.slice(0, 140) || `Download ${selectedApp.title} APK package safely on DownloadHub.`;
-                    const appIcon = selectedApp.acf?.app_icon || 'favicon.svg';
+                    const appIcon = selectedApp.acf?.app_icon || 'https://download-hub-new.vercel.app/og-image.png';
 
                     document.title = `${selectedApp.title} APK Download | DownloadHub`;
                     setMeta('og:title', appTitle);
@@ -269,7 +272,7 @@
                     document.title = 'DownloadHub | Premium Android Apps & Games Portal';
                     setMeta('og:title', 'DownloadHub | Premium Android Apps & Games Portal');
                     setMeta('og:description', 'Discover, explore, and safely download verified Android apps & games with Play Protect security.');
-                    setMeta('og:image', 'favicon.svg');
+                    setMeta('og:image', 'https://download-hub-new.vercel.app/og-image.png');
                 }
             }, [currentView, selectedApp]);
 
