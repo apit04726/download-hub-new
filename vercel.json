@@ -3,7 +3,7 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/((?!uploads|wp-content|.*\\.apk|.*\\.svg|.*\\.css|.*\\.png|.*\\.jpg|.*\\.jpeg).*)",
+      "source": "/((?!uploads|wp-content|.*\\.apk|.*\\.svg|.*\\.css|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.json|.*\\.js|.*\\.ico).*)",
       "destination": "/index.html"
     }
   ]
