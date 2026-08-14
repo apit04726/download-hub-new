@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/((?!uploads|wp-content|.*\\.apk|.*\\.svg|.*\\.css|.*\\.png|.*\\.jpg|.*\\.jpeg|.*\\.json|.*\\.js|.*\\.ico).*)",
+      "destination": "/api/index"
     }
   ]
 }
